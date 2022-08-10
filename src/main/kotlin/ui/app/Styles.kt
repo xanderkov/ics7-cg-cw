@@ -1,7 +1,6 @@
-package UI.app
+package ui.app
 
 import javafx.scene.text.FontWeight
-import org.intellij.lang.annotations.JdkConstants.FontStyle
 import tornadofx.Stylesheet
 import tornadofx.box
 import tornadofx.cssclass
@@ -18,6 +17,11 @@ class Styles : Stylesheet() {
             fontSize = 20.px
             fontWeight = FontWeight.BOLD
 
+        }
+        button {
+            padding = box(40.px)
+            fontSize = 20.px
+            fontWeight = FontWeight.BOLD
         }
     }
 }

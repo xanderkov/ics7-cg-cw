@@ -1,8 +1,10 @@
-package UI.app
+package ui
 
-import UI.view.MainView
+import ui.app.Styles
+import ui.view.MainView
 import javafx.stage.Stage
 import tornadofx.App
+
 
 class MyApp: App(MainView::class, Styles::class) {
     override fun start(stage: Stage) {
@@ -12,4 +14,5 @@ class MyApp: App(MainView::class, Styles::class) {
         }
         super.start(stage)
     }
+
 }
