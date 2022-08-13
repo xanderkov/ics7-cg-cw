@@ -8,14 +8,16 @@ import java.util.concurrent.CopyOnWriteArrayList
 
 
 class Scene {
-    private val camera: Camera
-    private val light: Light
+    val camera: Camera
+    val light: Light
     private val solids: CopyOnWriteArrayList<Solid>
+    val skybox: Skybox
 
     init {
-        solids = CopyOnWriteArrayList<Solid>()
+        solids = CopyOnWriteArrayList()
         camera = Camera()
         light = Light(Vector3(-1f, 2f, -1f))
+        skybox = Skybox("Sky.jpg")
     }
 
     fun addSolid(solid: Solid) {
@@ -30,7 +32,7 @@ class Scene {
         var closestHit: RayHit? = null
         for (solid in solids) {
             if (solid == null) continue
-            val hitPos: Vector3 = solid.calculateIntersection(ray)
+            val hitPos = solid.calculateIntersection(ray)
             if (hitPos != null && (closestHit == null || Vector3.distance(
                     closestHit.position,
                     ray.origin
@@ -41,10 +43,4 @@ class Scene {
         }
         return closestHit
     }
-
-    fun getCamera(): Camera { return camera }
-
-    fun getLight(): Light { return light }
-
-
 }

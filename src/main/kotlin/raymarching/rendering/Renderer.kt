@@ -28,7 +28,7 @@ class Renderer {
     }
 
     private fun getDiffuseBrightness(scene: Scene, hit: RayHit): Float {
-        val sceneLight = scene.getLight()
+        val sceneLight = scene.light
 
         // Raytrace to light to check if something blocks the light
         val lightBlocker = scene.raycast(
@@ -42,17 +42,17 @@ class Renderer {
         } else {
             Math.max(
                 GLOBAL_ILLUMINATION,
-                Math.min(1f, Vector3.dot(hit.normal, sceneLight.getPosition().subtract(hit.position)))
+                Math.min(1f, Vector3.dot(hit.normal!!, sceneLight.getPosition().subtract(hit.position)))
             )
         }
     }
 
     private fun getSpecularBrightness(scene: Scene, hit: RayHit): Float {
         val hitPos: Vector3 = hit.position
-        val cameraDirection: Vector3 = scene.getCamera().position.subtract(hitPos).normalize()
-        val lightDirection = hitPos.subtract(scene.getLight().getPosition()).normalize()
+        val cameraDirection: Vector3 = scene.camera.position.subtract(hitPos).normalize()
+        val lightDirection = hitPos.subtract(scene.light.getPosition()).normalize()
         val lightReflectionVector =
-            lightDirection.subtract(hit.normal.multiply(2 * Vector3.dot(lightDirection, hit.normal)))
+            lightDirection.subtract(hit.normal!!.multiply(2 * Vector3.dot(lightDirection, hit.normal)))
         val specularFactor =
             Math.max(0f, Math.min(1f, Vector3.dot(lightReflectionVector, cameraDirection)))
         return Math.pow(specularFactor.toDouble(), 2.0).toFloat() * hit.solid.reflectivity
@@ -62,32 +62,43 @@ class Renderer {
         val hitPos: Vector3 = hit.position
         val rayDir: Vector3 = hit.ray.direction
         val hitSolid: Solid = hit.solid
+        val hitColor: Color = hitSolid.getTextureColor(hitPos.subtract(hitSolid.position))
         val brightness: Float = getDiffuseBrightness(scene, hit)
         val specularBrightness: Float = getSpecularBrightness(scene, hit)
         val reflectivity: Float = hitSolid.reflectivity
         val emission: Float = hitSolid.emission
+
         val reflection: PixelData
-        val reflectionVector = rayDir.subtract(hit.normal.multiply(2f * Vector3.dot(rayDir, hit.normal)))
+        val reflectionVector = rayDir.subtract(hit.normal!!.multiply(2f * Vector3.dot(rayDir, hit.normal)))
         val reflectionRayOrigin =
             hitPos.add(reflectionVector.multiply(0.001f)) // Add a little to avoid hitting the same solid again
         val reflectionHit: RayHit? = if (recursionLimit > 0) scene.raycast(Ray(reflectionRayOrigin, reflectionVector)) else null
         reflection = if (reflectionHit != null) {
             computePixelInfoAtHit(scene, reflectionHit, recursionLimit - 1)
         } else {
+            val sbColor: Color = scene.skybox.getColor(reflectionVector)
             PixelData(
+                sbColor,
                 Float.POSITIVE_INFINITY,
-                Math.min(1f, emission + 0 * reflectivity + specularBrightness)
+                sbColor.luminance * SKY_EMISSION
             )
         }
+        val pixelColor: Color = Color.lerp(hitColor, reflection.color, reflectivity) // Reflected color
+            .multiply(brightness) // Diffuse lighting
+            .add(specularBrightness) // Specular lighting
+            .add(hitColor.multiply(emission)) // Object emission
+            .add(reflection.color.multiply(reflection.emission * reflectivity)) // Indirect illumination
+
+
         return PixelData(
-            Vector3.distance(scene.getCamera().position, hitPos),
-            Math.min(1f, emission + reflection.emission * reflectivity + specularBrightness)
+            pixelColor, Vector3.distance(scene.camera.position, hitPos),
+            Math.min(1.0f, emission + reflection.emission * reflectivity + specularBrightness)
         )
     }
 
     fun computePixelInfo(scene: Scene, u: Float, v: Float): PixelData? {
-        val eyePos = Vector3(0f, 0f, (-1 / Math.tan(Math.toRadians(scene.getCamera().fOV / 2.0))).toFloat())
-        val cam = scene.getCamera()
+        val eyePos = Vector3(0f, 0f, (-1 / Math.tan(Math.toRadians(scene.camera.fOV / 2.0))).toFloat())
+        val cam = scene.camera
         val rayDir = Vector3(u, v, 0f).subtract(eyePos).normalize().rotateYP(cam.yaw, cam.pitch)
         val hit = scene.raycast(Ray(eyePos.add(cam.position), rayDir))
         return if (hit != null) {
@@ -96,12 +107,19 @@ class Renderer {
                 hit,
                 MAX_REFLECTION_BOUNCES
             )
+        } else if (SHOW_SKYBOX) {
+            val sbColor: Color = scene.skybox.getColor(rayDir)
+            PixelData(
+                sbColor,
+                Float.POSITIVE_INFINITY,
+                sbColor.luminance * SKY_EMISSION
+            )
         } else {
-            PixelData(Float.POSITIVE_INFINITY, 0f)
+            PixelData(Color.BLACK, Float.POSITIVE_INFINITY, 0f)
         }
     }
 
-    fun renderScene(scene: Scene, width: Int, height: Int): PixelBuffer? {
+    fun renderScene(scene: Scene, width: Int, height: Int): PixelBuffer {
         val pixelBuffer = PixelBuffer(width, height)
         for (x in 0 until width) {
             for (y in 0 until height) {
@@ -117,7 +135,7 @@ class Renderer {
         return pixelBuffer
     }
 
-    fun renderScene(scene: Scene, gfx: Graphics, width: Int, height: Int, resolution: Float) {
+    fun renderScene(scene: Scene?, gfx: Graphics, width: Int, height: Int, resolution: Float) {
         val blockSize = (1 / resolution).toInt()
         var x = 0
         while (x < width) {
@@ -125,7 +143,8 @@ class Renderer {
             while (y < height) {
                 val uv: FloatArray? =
                     getNormalizedScreenCoordinates(x, y, width, height)
-                val pixelData: PixelData? = computePixelInfo(scene, uv!![0], uv[1])
+                val pixelData: PixelData? = computePixelInfo(scene!!, uv!![0], uv[1])
+                gfx.color = pixelData!!.color.toAWTColor()
                 gfx.fillRect(x, y, blockSize, blockSize)
                 y += blockSize
             }

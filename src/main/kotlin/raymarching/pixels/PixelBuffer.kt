@@ -23,7 +23,7 @@ class PixelBuffer(val width: Int, val height: Int) {
             for (j in pixels[i]!!.indices) {
                 val pxl = pixels[i]!![j]
                 if (pxl != null && pxl.emission < minEmission) {
-                    pixels[i]!![j] = PixelData(pxl.depth, pxl.emission)
+                    pixels[i]!![j] = PixelData(Color.BLACK, pxl.depth, pxl.emission)
                 }
             }
         }

@@ -2,20 +2,15 @@ package raymarching.solids
 
 import raymarching.math.Ray
 import raymarching.math.Vector3
+import raymarching.pixels.Color
 
 
-abstract class Solid(var position: Vector3, reflectivity: Float, emission: Float) {
-    var reflectivity: Float
-        protected set
-    var emission: Float
-        protected set
+abstract class Solid(var position: Vector3, var color: Color, var reflectivity: Float, var emission: Float) {
 
-    init {
-        this.reflectivity = reflectivity
-        this.emission = emission
+    abstract fun calculateIntersection(ray: Ray?): Vector3?
+    abstract fun getNormalAt(point: Vector3?): Vector3?
+    fun getTextureColor(point: Vector3?): Color {
+        return color
     }
-
-    abstract fun calculateIntersection(ray: Ray): Vector3
-    abstract fun getNormalAt(point: Vector3): Vector3
-
 }
+

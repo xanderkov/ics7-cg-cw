@@ -7,6 +7,7 @@ import raymarching.rendering.Camera
 import raymarching.rendering.Renderer
 import raymarching.rendering.Scene
 import raymarching.solids.Sphere
+import raymarching.pixels.Color
 import tornadofx.*
 import java.awt.image.BufferedImage
 import java.io.File
@@ -27,17 +28,15 @@ class MainView : View("Cup and Spoon") {
     val Renderer: Renderer? = null
     init {
         scene = Scene()
-        camera = scene!!.getCamera()
+        camera = scene!!.camera
 
-        cameraMotion = Vector3(0, 0, 0)
 
-        scene!!.addSolid(Sphere(Vector3(-1f, 0f, 0f), 0.4f, 0.4f, 0f))
-        scene!!.addSolid(Sphere(Vector3(0f, 0f, 0f), 0.4f, 0.4f, 0f))
-        scene!!.addSolid(Sphere(Vector3(1f, 0f, 0f), 0.4f, 0.4f, 0f))
+        scene!!.addSolid(Sphere(Vector3(-1f, 0f, 0f), 0.4f, Color.RED, 0.4f, 0f))
+        scene!!.addSolid(Sphere(Vector3(0f, 0f, 0f), 0.4f, Color.GREEN, 0.4f, 0f))
+        scene!!.addSolid(Sphere(Vector3(1f, 0f, 0f), 0.4f, Color.BLUE, 0.4f, 0f))
 
         cameraYaw = camera!!.yaw
-        cameraPitch = camera.getPitch()
-        this.cameraPosition = camera.getPosition()
+        cameraPitch = camera!!.pitch
 
     }
     private val postProcessing = false
