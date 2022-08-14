@@ -141,5 +141,6 @@ class Color(red: kotlin.Float, green: kotlin.Float, blue: kotlin.Float) {
         val MAGENTA = Color(1.0f, 0.0f, 1.0f)
         val GRAY = Color(0.5f, 0.5f, 0.5f)
         val DARK_GRAY = Color(0.2f, 0.2f, 0.2f)
+        val TREE = Color(0.40f, 0.26f, 0.13f)
     }
 }

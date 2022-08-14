@@ -18,16 +18,17 @@ class Sphere(position: Vector3, private val radius: Float, color: Color, reflect
             if (t1 > 0) {
                 ray.origin.add(ray.direction.multiply(t1))
             } else null
-
         } else {
             null
         }
-
-
     }
 
     override fun getNormalAt(point: Vector3?): Vector3? {
         return point?.subtract(position)?.normalize()
+    }
+
+    override fun getTextureColor(point: Vector3?): Color {
+        return color
     }
 
 }
