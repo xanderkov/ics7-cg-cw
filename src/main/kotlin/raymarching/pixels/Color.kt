@@ -65,6 +65,10 @@ class Color(red: kotlin.Float, green: kotlin.Float, blue: kotlin.Float) {
         return java.awt.Color(red, green, blue)
     }
 
+    fun toJavaColor(): javafx.scene.paint.Color {
+        return javafx.scene.paint.Color.rgb(red.toInt(), green.toInt(), blue.toInt())
+    }
+
     companion object {
         fun fromInt(argb: Int): Color {
             val b = argb and 0xFF

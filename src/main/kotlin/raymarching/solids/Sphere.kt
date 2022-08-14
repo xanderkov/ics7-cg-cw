@@ -17,10 +17,10 @@ class Sphere(position: Vector3, private val radius: Float, color: Color, reflect
             val t1 = t - x
             if (t1 > 0) {
                 return ray.origin.add(ray.direction.multiply(t1))
-            } else return null!!
+            } else return null
 
         } else {
-            return null!!
+            return null
         }
 
 

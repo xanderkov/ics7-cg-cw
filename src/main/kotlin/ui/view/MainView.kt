@@ -2,13 +2,17 @@ package ui.view
 
 import javafx.beans.property.SimpleStringProperty
 import javafx.geometry.Pos
+import javafx.scene.image.WritableImage
 import raymarching.math.*
+import raymarching.pixels.Color
+import raymarching.pixels.PixelData
 import raymarching.rendering.Camera
 import raymarching.rendering.Renderer
 import raymarching.rendering.Scene
+import raymarching.solids.Solid
 import raymarching.solids.Sphere
-import raymarching.pixels.Color
 import tornadofx.*
+import java.awt.Graphics
 import java.awt.image.BufferedImage
 import java.io.File
 import java.io.FileOutputStream
@@ -18,33 +22,35 @@ import javax.imageio.ImageIO
 class MainView : View("Cup and Spoon") {
 
     var labelText = SimpleStringProperty("/tornado.jpg")
-    var imageName = "/tornado.jpg"
 
     private var scene: Scene? = null
     private var camera: Camera? = null
     private var cameraYaw = 0f
     private var cameraPitch = 0f
 
-    val Renderer: Renderer? = null
+    val imageok = WritableImage(1000, 500)
+
+    val renderer: Renderer? = null
     init {
         scene = Scene()
         camera = scene!!.camera
 
 
-        scene!!.addSolid(Sphere(Vector3(-1f, 0f, 0f), 0.4f, Color.RED, 0.4f, 0f))
-        scene!!.addSolid(Sphere(Vector3(0f, 0f, 0f), 0.4f, Color.GREEN, 0.4f, 0f))
-        scene!!.addSolid(Sphere(Vector3(1f, 0f, 0f), 0.4f, Color.BLUE, 0.4f, 0f))
+        scene!!.addSolid(Sphere(Vector3(-1f, 0f, 0f), 0.4f, Color.RED, 1f, 0f))
+
 
         cameraYaw = camera!!.yaw
         cameraPitch = camera!!.pitch
 
     }
+
     private val postProcessing = false
     @Throws(IOException::class)
     fun renderToImage(width: Int, height: Int) {
         val image = BufferedImage(width, height, BufferedImage.TYPE_INT_RGB)
+
         println("Rendering to image...")
-        Renderer?.renderScene(scene!!, 500, 500)
+        Renderer.renderScene(scene!!, image.graphics, width, height, 1f)
         val imgFile = File("src/main/resources/output.png")
         ImageIO.write(image, "PNG", FileOutputStream(imgFile))
         println("Image saved.")
