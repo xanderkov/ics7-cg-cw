@@ -18,6 +18,11 @@ class Styles : Stylesheet() {
             fontWeight = FontWeight.BOLD
 
         }
+        label {
+            padding = box(10.px)
+            fontSize = 20.px
+            fontWeight = FontWeight.BOLD
+        }
         button {
             padding = box(10.px)
             fontSize = 20.px

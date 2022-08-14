@@ -4,7 +4,7 @@ import javafx.beans.property.SimpleStringProperty
 import javafx.embed.swing.SwingFXUtils
 import javafx.geometry.Pos
 import javafx.scene.image.ImageView
-import raymarching.math.*
+import raymarching.math.Vector3
 import raymarching.pixels.Color
 import raymarching.rendering.Camera
 import raymarching.rendering.Renderer
@@ -14,12 +14,9 @@ import raymarching.solids.Plane
 import raymarching.solids.Sphere
 import tornadofx.*
 import java.awt.image.BufferedImage
-import java.io.File
-import java.io.FileOutputStream
 import java.io.IOException
-import javax.imageio.ImageIO
 
-class MainView : View("Cup and Spoon") {
+class SettingsView : View("Cup and Spoon") {
 
     var labelText = SimpleStringProperty("/output.png")
 
