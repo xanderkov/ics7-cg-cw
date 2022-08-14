@@ -19,6 +19,7 @@ class Skybox(resourceName: String) {
             override fun run() {
                 try {
                     println("Loading skybox $resourceName...")
+                    sphereImage = ImageIO.read(javaClass.getResourceAsStream("/god.jpeg"))
                     println("Skybox ready.")
                     isLoaded = true
                 } catch (ex: IOException) {

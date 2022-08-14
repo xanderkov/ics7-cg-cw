@@ -15,7 +15,7 @@ class Renderer() {
         private val GLOBAL_ILLUMINATION = 0.3f
         private val SKY_EMISSION = 0.5f
         private val MAX_REFLECTION_BOUNCES = 5
-        private val SHOW_SKYBOX = false
+        private val SHOW_SKYBOX = true
         fun getNormalizedScreenCoordinates(x: Int, y: Int, width: Int, height: Int): FloatArray? {
             var u = 0f
             var v = 0f

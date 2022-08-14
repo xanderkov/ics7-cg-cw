@@ -12,15 +12,15 @@ class Sphere(position: Vector3, private val radius: Float, color: Color, reflect
         val p: Vector3 = ray.origin.add(ray.direction.multiply(t))
         val y = position.subtract(p).length()
 
-        if (y < radius) {
+        return if (y < radius) {
             val x = Math.sqrt((radius * radius - y * y).toDouble()).toFloat()
             val t1 = t - x
             if (t1 > 0) {
-                return ray.origin.add(ray.direction.multiply(t1))
-            } else return null
+                ray.origin.add(ray.direction.multiply(t1))
+            } else null
 
         } else {
-            return null
+            null
         }
 
 

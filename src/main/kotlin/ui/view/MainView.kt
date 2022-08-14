@@ -28,7 +28,6 @@ class MainView : View("Cup and Spoon") {
     private var cameraYaw = 0f
     private var cameraPitch = 0f
 
-    val imageok = WritableImage(1000, 500)
 
     val renderer: Renderer? = null
     init {
@@ -36,9 +35,10 @@ class MainView : View("Cup and Spoon") {
         camera = scene!!.camera
 
 
-        scene!!.addSolid(Sphere(Vector3(-1f, 0f, 0f), 0.4f, Color.RED, 1f, 0f))
-
-
+        scene!!.addSolid(Sphere(Vector3(0f, -0.5f, 0f), 0.4f, Color.RED, 0.4f, 0f))
+        scene!!.addSolid(Sphere(Vector3(0.5f, -0.5f, 0f), 0.4f, Color.GREEN, 0.4f, 0f))
+        scene!!.addSolid(Sphere(Vector3(0.25f, 0f, 0f), 0.4f, Color.BLUE, 0.5f, 0f))
+        scene!!.addSolid(Sphere(Vector3(0.25f, 0.5f, 0f), 0.4f, Color.BLUE, 0.5f, 0f))
         cameraYaw = camera!!.yaw
         cameraPitch = camera!!.pitch
 
