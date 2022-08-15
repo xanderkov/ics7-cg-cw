@@ -48,8 +48,8 @@ class Box(position: Vector3, scale: Vector3, color: Color, reflectivity: Float, 
         return point.x >= min.x && point.y >= min.y && point.z >= min.z && point.x <= max.x && point.y <= max.y && point.z <= max.z
     }
 
-    override fun getNormalAt(point: Vector3?): Vector3 {
-        val direction: FloatArray = point!!.subtract(position).toArray()
+    override fun getNormalAt(point: Vector3): Vector3 {
+        val direction: FloatArray = point.subtract(position).toArray()
         var biggestValue = Float.NaN
         for (i in 0..2) {
             if (java.lang.Float.isNaN(biggestValue) || biggestValue < Math.abs(direction[i])) {

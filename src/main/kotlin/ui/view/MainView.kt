@@ -10,6 +10,7 @@ import raymarching.rendering.Camera
 import raymarching.rendering.Renderer
 import raymarching.rendering.Scene
 import raymarching.solids.Box
+import raymarching.solids.Cylinders
 import raymarching.solids.Plane
 import raymarching.solids.Sphere
 import tornadofx.*
@@ -42,9 +43,11 @@ class MainView : View("Cup and Spoon") {
         camera = scene!!.camera
 
         cameraPosition.translate(Vector3(-0.5f, 0f, -1f))
-        scene!!.addSolid(Sphere(Vector3(0f, -0.5f, 0f), 0.4f, Color.RED, 0.4f, 0f))
+        scene!!.addSolid(Sphere(Vector3(2f, 3f, 0f), 0.4f, Color.DARK_GRAY, 1f, 0f))
 
-        scene!!.addSolid(Box(Vector3(0f, 1f, 0f), Vector3(0.5f, 2f, 0.5f), Color.BLUE, 0.6f, 0f))
+        scene!!.addSolid(Box(Vector3(0f, 1f, 2f), Vector3(1f, 1f, 1f), Color.BLUE, 1f, 0.2f))
+
+        scene!!.addSolid(Cylinders(Vector3(0f, -0.5f, 2f), 2f, 2f, Color.WHITE, 0.6f, 0f))
 
         scene!!.addSolid(Plane(-1f, Color(0f, 0f, 0f), true, 0.1f, 0f))
 

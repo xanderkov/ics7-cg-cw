@@ -14,7 +14,7 @@ class Plane(height: Float, color: Color?, private val checkerPattern: Boolean, r
         } else null
     }
 
-    override fun getNormalAt(point: Vector3?): Vector3 {
+    override fun getNormalAt(point: Vector3): Vector3 {
         return Vector3(0f, 1f, 0f)
     }
 
