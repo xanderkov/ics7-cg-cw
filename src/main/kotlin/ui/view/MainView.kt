@@ -4,15 +4,15 @@ import javafx.beans.property.SimpleStringProperty
 import javafx.embed.swing.SwingFXUtils
 import javafx.geometry.Pos
 import javafx.scene.image.ImageView
-import raymarching.math.*
-import raymarching.pixels.Color
-import raymarching.rendering.Camera
-import raymarching.rendering.Renderer
-import raymarching.rendering.Scene
-import raymarching.solids.Box
-import raymarching.solids.Cylinders
-import raymarching.solids.Plane
-import raymarching.solids.Sphere
+import raytracing.math.*
+import raytracing.pixels.Color
+import raytracing.rendering.Camera
+import raytracing.rendering.Renderer
+import raytracing.rendering.Scene
+import raytracing.solids.Box
+import raytracing.solids.Cylinders
+import raytracing.solids.Plane
+import raytracing.solids.Sphere
 import tornadofx.*
 import java.awt.image.BufferedImage
 import java.io.File
@@ -32,6 +32,8 @@ class MainView : View("Cup and Spoon") {
     private val HEIGHT: Int = 600
     val captureCursor = false
 
+    val resolution: Float = 1f
+
     private val cameraMotion: Vector3? = null
     private val cameraPosition: Vector3 = Vector3(0f, 0f, 0f)
 
@@ -43,11 +45,11 @@ class MainView : View("Cup and Spoon") {
         camera = scene!!.camera
 
         cameraPosition.translate(Vector3(-0.5f, 0f, -1f))
-        scene!!.addSolid(Sphere(Vector3(2f, 3f, 0f), 0.4f, Color.DARK_GRAY, 1f, 0f))
+        scene!!.addSolid(Sphere(Vector3(2f, 1.5f, 0f), 0.4f, Color.DARK_GRAY, 1f, 0f))
 
-        scene!!.addSolid(Box(Vector3(0f, 1f, 2f), Vector3(1f, 1f, 1f), Color.BLUE, 1f, 0.2f))
+        scene!!.addSolid(Box(Vector3(0f, 0f, 2f), Vector3(1f, 1f, 1f), Color.BLUE, 0.5f, 0.2f))
 
-        scene!!.addSolid(Cylinders(Vector3(0f, -0.5f, 2f), 2f, 2f, Color.WHITE, 0.6f, 0f))
+        //scene!!.addSolid(Cylinders(Vector3(0f, -0.5f, 2f), 2f, 2f, Color.WHITE, 0.6f, 0f))
 
         scene!!.addSolid(Plane(-1f, Color(0f, 0f, 0f), true, 0.1f, 0f))
 
@@ -63,9 +65,7 @@ class MainView : View("Cup and Spoon") {
     private val postProcessing = false
     @Throws(IOException::class)
     fun renderToImage(width: Int, height: Int) {
-
-        println("Rendering to image...")
-        Renderer.renderScene(scene!!, image.graphics, width, height, 1f)
+        Renderer.renderScene(scene!!, image.graphics, width, height, resolution)
 
     }
 

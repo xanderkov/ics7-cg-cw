@@ -1,7 +1,7 @@
-package raymarching.solids
+package raytracing.solids
 
-import raymarching.math.*
-import raymarching.pixels.Color
+import raytracing.math.*
+import raytracing.pixels.Color
 
 class Box(position: Vector3, scale: Vector3, color: Color, reflectivity: Float, emission: Float) :
     Solid(position, color, reflectivity, emission) {

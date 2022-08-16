@@ -1,8 +1,8 @@
-package raymarching.solids
+package raytracing.solids
 
-import raymarching.math.Ray
-import raymarching.math.Vector3
-import raymarching.pixels.Color
+import raytracing.math.Ray
+import raytracing.math.Vector3
+import raytracing.pixels.Color
 
 class Sphere(position: Vector3, private val radius: Float, color: Color, reflectivity: Float, emission: Float):
     Solid(position, color, reflectivity, emission) {

@@ -1,9 +1,9 @@
-package raymarching.rendering
+package raytracing.rendering
 
-import raymarching.math.Ray
-import raymarching.math.RayHit
-import raymarching.math.Vector3
-import raymarching.solids.Solid
+import raytracing.math.Ray
+import raytracing.math.RayHit
+import raytracing.math.Vector3
+import raytracing.solids.Solid
 import java.util.concurrent.CopyOnWriteArrayList
 
 

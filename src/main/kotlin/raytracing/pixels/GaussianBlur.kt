@@ -1,4 +1,4 @@
-package raymarching.pixels
+package raytracing.pixels
 
 class GaussianBlur(  // Currently unused due to kernel being hardcoded
     var pixelBuffer: PixelBuffer

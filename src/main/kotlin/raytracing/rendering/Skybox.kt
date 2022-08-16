@@ -1,7 +1,7 @@
-package raymarching.rendering
+package raytracing.rendering
 
-import raymarching.math.Vector3
-import raymarching.pixels.Color
+import raytracing.math.Vector3
+import raytracing.pixels.Color
 import java.awt.image.BufferedImage
 import java.io.File
 import java.io.IOException

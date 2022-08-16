@@ -1,6 +1,6 @@
-package raymarching.math
+package raytracing.math
 
-import raymarching.solids.Solid
+import raytracing.solids.Solid
 
 class RayHit(val ray: Ray, val solid: Solid, val position: Vector3) {
     val normal: Vector3?

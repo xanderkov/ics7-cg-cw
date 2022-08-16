@@ -1,4 +1,4 @@
-package raymarching.pixels
+package raytracing.pixels
 
 
 class PixelData(var color: Color, var depth: Float, var emission: Float) {

@@ -1,8 +1,8 @@
-package raymarching.solids
+package raytracing.solids
 
-import raymarching.math.Ray
-import raymarching.math.Vector3
-import raymarching.pixels.Color
+import raytracing.math.Ray
+import raytracing.math.Vector3
+import raytracing.pixels.Color
 
 class Plane(height: Float, color: Color?, private val checkerPattern: Boolean, reflectivity: Float, emission: Float) :
     Solid(Vector3(0f, height, 0f), color!!, reflectivity, emission) {

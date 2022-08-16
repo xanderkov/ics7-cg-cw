@@ -1,6 +1,6 @@
-package raymarching.rendering
+package raytracing.rendering
 
-import raymarching.math.Vector3
+import raytracing.math.Vector3
 
 class Camera {
 

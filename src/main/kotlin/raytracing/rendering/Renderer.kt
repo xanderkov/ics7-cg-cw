@@ -1,9 +1,9 @@
-package raymarching.rendering
+package raytracing.rendering
 
 import javafx.scene.image.WritableImage
-import raymarching.math.*
-import raymarching.pixels.*
-import raymarching.solids.Solid
+import raytracing.math.*
+import raytracing.pixels.*
+import raytracing.solids.Solid
 import java.awt.Graphics
 
 class Renderer() {
@@ -12,11 +12,11 @@ class Renderer() {
     val bloomIntensity = 0.5F
     val bloomRadius = 10
     companion object {
-        private val GLOBAL_ILLUMINATION = 0.3f
+        private val GLOBAL_ILLUMINATION = 0.2f
         private val SKY_EMISSION = 0.5f
         private val MAX_REFLECTION_BOUNCES = 5
         private val SHOW_SKYBOX = true
-        fun getNormalizedScreenCoordinates(x: Int, y: Int, width: Int, height: Int): FloatArray? {
+        fun getNormalizedScreenCoordinates(x: Int, y: Int, width: Int, height: Int): FloatArray {
             var u = 0f
             var v = 0f
             if (width > height) {
@@ -100,7 +100,7 @@ class Renderer() {
         }
 
         fun computePixelInfo(scene: Scene, u: Float, v: Float): PixelData {
-            val eyePos = Vector3(0f, 0f, (-1 / Math.tan(Math.toRadians(scene.camera.fOV / 2.0))).toFloat())
+            val eyePos = Vector3(0f, 0f, (-1 / kotlin.math.tan(Math.toRadians(scene.camera.fOV / 2.0))).toFloat())
             val cam = scene.camera
             val rayDir = Vector3(u, v, 0f).subtract(eyePos).normalize().rotateYP(cam.yaw, cam.pitch)
             val hit = scene.raycast(Ray(eyePos.add(cam.position), rayDir))
@@ -140,44 +140,27 @@ class Renderer() {
 
         fun renderScene(scene: Scene?, gfx: Graphics, width: Int, height: Int, resolution: Float) {
             val blockSize = (1 / resolution).toInt()
-            var x = 0
-            while (x < width) {
-                var y = 0
-                while (y < height) {
+            for (x in 0 until width step blockSize) {
+                for (y in 0 until height step blockSize) {
                     val uv: FloatArray? = getNormalizedScreenCoordinates(x, y, width, height)
-                    val pixelData: PixelData? = computePixelInfo(scene!!, uv!![0], uv[1])
+                    val pixelData: PixelData = computePixelInfo(scene!!, uv!![0], uv[1])
                     gfx.color = pixelData!!.color.toAWTColor()
                     gfx.fillRect(x, y, blockSize, blockSize)
-                    y += blockSize
-                }
-                x += blockSize
-            }
-        }
-
-        fun fillGood(scene: Scene, image: WritableImage, width: Int, height: Int, resolution: Float) {
-            val pw = image.pixelWriter
-            val blockSize = (1 / resolution).toInt()
-            for (x in 0 until image.width.toInt()) {
-                for (y in 0 until image.height.toInt()) {
-                    val uv: FloatArray? = getNormalizedScreenCoordinates(x, y, width, height)
-                    val pixelData: PixelData? = computePixelInfo(scene!!, uv!![0], uv[1])
-                    pw.setColor(x, y, pixelData!!.color.toJavaColor())
                 }
             }
-
         }
 
         fun renderScenePostProcessed(scene: Scene, gfx: Graphics, width: Int, height: Int, resolution: Float) {
             val bufferWidth = Math.round(width * resolution + 0.49f)
             val bufferHeight = Math.round(height * resolution + 0.49f)
-            val pixelBuffer: PixelBuffer? = renderScene(scene, bufferWidth, bufferHeight)
+            val pixelBuffer: PixelBuffer = renderScene(scene, bufferWidth, bufferHeight)
             val emissivePixels =
-                pixelBuffer?.clone() // The width of this buffer has to remain constant to keep the blur factor the same for all sizes
-            emissivePixels?.filterByEmission(0.1f)
+                pixelBuffer.clone() // The width of this buffer has to remain constant to keep the blur factor the same for all sizes
+            emissivePixels.filterByEmission(0.1f)
             val blockSize = 1 / resolution
             for (x in 0 until bufferWidth) {
                 for (y in 0 until bufferHeight) {
-                    val pixel = pixelBuffer?.getPixel(x, y)
+                    val pixel = pixelBuffer.getPixel(x, y)
                     gfx.fillRect(
                         (x * blockSize).toInt(),
                         (y * blockSize).toInt(),

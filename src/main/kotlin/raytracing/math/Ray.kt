@@ -1,4 +1,4 @@
-package raymarching.math
+package raytracing.math
 
 class Ray(origin: Vector3, direction: Vector3) {
     val origin: Vector3

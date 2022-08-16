@@ -1,4 +1,4 @@
-package raymarching.math
+package raytracing.math
 
 import java.lang.Float
 import kotlin.FloatArray

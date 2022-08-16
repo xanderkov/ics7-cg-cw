@@ -1,4 +1,4 @@
-package raymarching.pixels
+package raytracing.pixels
 
 import java.util.Arrays
 

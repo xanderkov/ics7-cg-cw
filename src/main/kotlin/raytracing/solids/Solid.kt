@@ -1,8 +1,8 @@
-package raymarching.solids
+package raytracing.solids
 
-import raymarching.math.Ray
-import raymarching.math.Vector3
-import raymarching.pixels.Color
+import raytracing.math.Ray
+import raytracing.math.Vector3
+import raytracing.pixels.Color
 
 
 abstract class Solid(var position: Vector3, var color: Color, var reflectivity: Float, var emission: Float) {

@@ -1,4 +1,4 @@
-package raymarching.math
+package raytracing.math
 
 class Line(var pointA: Vector3, var pointB: Vector3) {
     fun asRay(): Ray {
