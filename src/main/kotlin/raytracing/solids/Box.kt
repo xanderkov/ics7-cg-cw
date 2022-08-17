@@ -70,7 +70,7 @@ class Box(position: Vector3, scale: Vector3, color: Color, reflectivity: Float, 
         return Vector3(0f, 0f, 0f)
     }
 
-    override fun getTextureColor(point: Vector3?): Color {
+    override fun getTextureColor(point: Vector3): Color {
         return color
     }
 }

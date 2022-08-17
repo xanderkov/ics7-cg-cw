@@ -33,7 +33,7 @@ class Cylinders(position: Vector3, private val radius: Float, private val height
         return Vector3(point.x - position.x, 0f, point.z - position.z).normalize()
     }
 
-    override fun getTextureColor(point: Vector3?): Color {
+    override fun getTextureColor(point: Vector3): Color {
         return color
     }
 

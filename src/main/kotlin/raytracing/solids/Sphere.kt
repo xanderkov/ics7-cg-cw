@@ -27,7 +27,7 @@ class Sphere(position: Vector3, private val radius: Float, color: Color, reflect
         return point.subtract(position).normalize()
     }
 
-    override fun getTextureColor(point: Vector3?): Color {
+    override fun getTextureColor(point: Vector3): Color {
         return color
     }
 

@@ -13,9 +13,12 @@ class MyApp: App(MainView::class, Styles::class) {
         with(stage) {
             width = 1200.0
             height = 700.0
+
         }
         super.start(stage)
+        SettingsView().openWindow()
     }
+
 }
 fun main(args: Array<String>) {
     launch<MyApp>(args)
