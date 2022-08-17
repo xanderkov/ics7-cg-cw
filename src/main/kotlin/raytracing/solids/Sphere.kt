@@ -23,7 +23,7 @@ class Sphere(position: Vector3, private val radius: Float, color: Color, reflect
         }
     }
 
-    override fun getNormalAt(point: Vector3): Vector3{
+    override fun getNormalAt(point: Vector3): Vector3 {
         return point.subtract(position).normalize()
     }
 

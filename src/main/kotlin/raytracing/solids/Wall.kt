@@ -15,7 +15,7 @@ class Wall(width: Float, color: Color?, private val checkerPattern: Boolean, ref
     }
 
     override fun getNormalAt(point: Vector3): Vector3 {
-        return Vector3(0f, 0f, 1f)
+        return Vector3(0f, 0f, -1f)
     }
 
     override fun getTextureColor(point: Vector3): Color {
