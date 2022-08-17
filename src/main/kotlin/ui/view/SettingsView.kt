@@ -20,7 +20,12 @@ import java.io.IOException
 class SettingsView() : View("Settings") {
     override val root = hbox {
         val resolution_slider = slider(0f, 1f, 0.25f)
-
+        
+        fun makeImageProperties() {
+            MainView.renderToImage(MainView.WIDTH, MainView.HEIGHT)
+            MainView.resolutionf = resolution_slider.value.toFloat()
+        }
+        
         val camangles = vbox {
             alignment = Pos.CENTER
             spacing = 10.0
@@ -30,8 +35,7 @@ class SettingsView() : View("Settings") {
                     text = "↑"
                     action {
                         MainView.camera.pitch -= 20f
-                        val image = MainView.renderToImage(MainView.WIDTH, MainView.HEIGHT)
-                        MainView.currentImageProperty.set(SwingFXUtils.toFXImage(image, null))
+                        makeImageProperties()
                     }
                 }
                 hbox {
@@ -41,14 +45,14 @@ class SettingsView() : View("Settings") {
                         text = "←"
                         action {
                             MainView.camera.yaw -= 20f
-                            MainView.renderToImage(MainView.WIDTH, MainView.HEIGHT)
+                            makeImageProperties()
                         }
                     }
                     button {
                         text = "→"
                         action {
                             MainView.camera.yaw += 20f
-                            MainView.renderToImage(MainView.WIDTH, MainView.HEIGHT)
+                            makeImageProperties()
                         }
                     }
 
@@ -56,9 +60,9 @@ class SettingsView() : View("Settings") {
                 button {
                     text = "↓"
                     action {
-                        MainView.resolutionf = resolution_slider.value.toFloat()
+                        
                         MainView.camera.pitch += 20f
-                        MainView.renderToImage(MainView.WIDTH, MainView.HEIGHT)
+                        makeImageProperties()
                     }
                 }
             }
@@ -73,7 +77,7 @@ class SettingsView() : View("Settings") {
                     text = "W"
                     action {
                         MainView.camera.position.z += 0.2f
-                        MainView.renderToImage(MainView.WIDTH, MainView.HEIGHT)
+                        makeImageProperties()
                     }
                 }
                 hbox {
@@ -83,14 +87,14 @@ class SettingsView() : View("Settings") {
                         text = "A"
                         action {
                             MainView.camera.position.x -= 0.2f
-                            MainView.renderToImage(MainView.WIDTH, MainView.HEIGHT)
+                            makeImageProperties()
                         }
                     }
                     button {
                         text = "D"
                         action {
                             MainView.camera.position.x += 0.2f
-                            MainView.renderToImage(MainView.WIDTH, MainView.HEIGHT)
+                            makeImageProperties()
                         }
                     }
 
@@ -99,7 +103,7 @@ class SettingsView() : View("Settings") {
                     text = "S"
                     action {
                         MainView.camera.position.z -= 0.2f
-                        MainView.renderToImage(MainView.WIDTH, MainView.HEIGHT)
+                        makeImageProperties()
                     }
                 }
                 hbox {
@@ -109,14 +113,14 @@ class SettingsView() : View("Settings") {
                         text = "Shift"
                         action {
                             MainView.camera.position.y -= 0.2f
-                            MainView.renderToImage(MainView.WIDTH, MainView.HEIGHT)
+                            makeImageProperties()
                         }
                     }
                     button {
                         text = "Space"
                         action {
                             MainView.camera.position.y += 0.2f
-                            MainView.renderToImage(MainView.WIDTH, MainView.HEIGHT)
+                            makeImageProperties()
                         }
                     }
 
