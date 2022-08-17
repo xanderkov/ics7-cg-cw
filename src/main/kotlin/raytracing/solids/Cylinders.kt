@@ -10,17 +10,17 @@ class Cylinders(position: Vector3, private val radius: Float, private val height
 
     override fun calculateIntersection(ray: Ray?): Vector3? {
 
-        var intersectionPoint = ray!!.origin.subtract(position)
+        val intersectionPoint = ray!!.origin.subtract(position)
 
         var isBelongToCylinderBase = false
 
-        var ts1 = (height - ray.origin.y + position.y) / ray.direction.y
+        val ts1 = (height - ray.origin.y + position.y) / ray.direction.y
         var point = intersectionPoint.add(ray.direction.multiply(ts1))
 
         if (point.x * point.x + point.z * point.z - radius * radius < 0)
-            isBelongToCylinderBase = false
+            isBelongToCylinderBase = true
 
-        var ts2 = (-height - ray.origin.y + position.y) / ray.direction.y
+        val ts2 = (-height - ray.origin.y + position.y) / ray.direction.y
         point = intersectionPoint.add(ray.direction.multiply(ts2))
 
         if (point.x * point.x + point.z * point.z - radius * radius < 0)
@@ -50,7 +50,7 @@ class Cylinders(position: Vector3, private val radius: Float, private val height
         val t2: Float = (-b + kotlin.math.sqrt(delta)) / (a)
         t = if (t1 < 0) t2 else t1
 
-        if ((kotlin.math.abs(ray.origin.y + t * ray.direction.y - position.y) < height) && t > 0)
+        if ((kotlin.math.abs(ray.origin.y + t * ray.direction.y - position.y) <= height) && t > 0)
             return ray.origin.add(ray.direction.multiply(t))
         if (!isBelongToCylinderBase) return null
         t = kotlin.math.min(ts1, ts2)
