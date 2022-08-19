@@ -7,9 +7,9 @@ import raytracing.pixels.Color
 class Plane(height: Float, color: Color?, private val checkerPattern: Boolean, reflectivity: Float, emission: Float) :
     Solid(Vector3(0f, height, 0f), color!!, reflectivity, emission) {
 
-    override fun calculateIntersection(ray: Ray?): Vector3? {
+    override fun calculateIntersection(ray: Ray): Vector3? {
 
-        val t: Float = -(ray!!.origin.y - position.y) / ray.direction.y
+        val t: Float = -(ray.origin.y - position.y) / ray.direction.y
         return if (t > 0 && t.isFinite()) {
             ray.origin.add(ray.direction.multiply(t))
         } else null

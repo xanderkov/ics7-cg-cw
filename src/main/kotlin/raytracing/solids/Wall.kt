@@ -7,8 +7,8 @@ import raytracing.pixels.Color
 class Wall(width: Float, color: Color?, private val checkerPattern: Boolean, reflectivity: Float, emission: Float) :
     Solid(Vector3(0f, 0f, width), color!!, reflectivity, emission) {
 
-    override fun calculateIntersection(ray: Ray?): Vector3? {
-        val t: Float = -(ray!!.origin.z - position.z) / ray.direction.z
+    override fun calculateIntersection(ray: Ray): Vector3? {
+        val t: Float = -(ray.origin.z - position.z) / ray.direction.z
         return if (t > 0 && t.isFinite()) {
             ray.origin.add(ray.direction.multiply(t))
         } else null

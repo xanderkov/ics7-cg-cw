@@ -16,11 +16,8 @@ import raytracing.rendering.Scene
 import raytracing.solids.Box
 import raytracing.solids.Plane
 import raytracing.solids.Sphere
-import raytracing.solids.Wall
 import raytracing.solids.Cylinders
 import tornadofx.*
-import java.awt.event.MouseAdapter
-import java.awt.event.MouseEvent
 import java.awt.image.BufferedImage
 import java.io.File
 import java.io.FileOutputStream

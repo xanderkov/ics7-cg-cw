@@ -8,9 +8,9 @@ import raytracing.pixels.Color
 class Cylinders(position: Vector3, private val radius: Float, private val height: Float, color: Color, reflectivity: Float, emission: Float):
     Solid(position, color, reflectivity, emission) {
 
-    override fun calculateIntersection(ray: Ray?): Vector3? {
+    override fun calculateIntersection(ray: Ray): Vector3? {
 
-        val intersectionPoint = ray!!.origin.subtract(position)
+        val intersectionPoint = ray.origin.subtract(position)
 
         var isBelongToCylinderBase = false
 

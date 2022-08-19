@@ -1,23 +1,7 @@
 package ui.view
 
-import javafx.beans.property.SimpleFloatProperty
-import javafx.beans.property.SimpleStringProperty
-import javafx.embed.swing.SwingFXUtils
 import javafx.geometry.Pos
-import javafx.scene.Parent
-import javafx.scene.image.ImageView
-import org.w3c.dom.events.EventTarget
-import raytracing.math.Vector3
-import raytracing.pixels.Color
-import raytracing.rendering.Camera
-import raytracing.rendering.Renderer
-import raytracing.rendering.Scene
-import raytracing.solids.Box
-import raytracing.solids.Plane
-import raytracing.solids.Sphere
 import tornadofx.*
-import java.awt.image.BufferedImage
-import java.io.IOException
 
 class SettingsView() : View("Settings") {
 

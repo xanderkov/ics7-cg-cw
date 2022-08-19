@@ -13,14 +13,14 @@ class Box(position: Vector3, scale: Vector3, color: Color, reflectivity: Float, 
         min = position.subtract(scale.multiply(0.5f))
     }
 
-    override fun calculateIntersection(ray: Ray?): Vector3? {
+    override fun calculateIntersection(ray: Ray): Vector3? {
         var t1: Float
         var t2: Float
         var tnear = Float.NEGATIVE_INFINITY
         var tfar = Float.POSITIVE_INFINITY
         var temp: Float
         var intersectFlag = true
-        val rayDirection: FloatArray = ray!!.direction.toArray()
+        val rayDirection: FloatArray = ray.direction.toArray()
         val rayOrigin: FloatArray = ray.origin.toArray()
         val b1: FloatArray = min.toArray()
         val b2: FloatArray = max.toArray()
