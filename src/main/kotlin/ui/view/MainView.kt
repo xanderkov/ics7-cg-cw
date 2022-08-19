@@ -62,14 +62,15 @@ class MainView : View("Cup and Spoon") {
             camera = scene!!.camera
             scene!!.light.setPosition(Vector3(-1f, 2f, 1f))
             cameraPosition.translate(Vector3(-0.5f, 0f, -1f))
-            scene!!.addSolid(Sphere(Vector3(2f, 0f, 0f), 0.4f, Color.DARK_GRAY, 1f, 0f))
+
+            scene!!.addSolid(Sphere(Vector3(2f, 0f, 0f), 1.4f, Color.DARK_GRAY, 1f, 0.2f))
 
             scene!!.addSolid(Box(Vector3(0f, 0f, 2f), Vector3(1f, 1f, 1f), Color.BLUE, 0.5f, 0.2f))
 
-            scene!!.addSolid(Cylinders(Vector3(-4f, 0.5f, 2f), 0.5f, 1f, Color.DARK_GRAY, 1f, 0.2f))
+            scene!!.addSolid(Cylinders(Vector3(-4f, 1.5f, 2f), 1f, 1f, Color.DARK_GRAY, 0.5f, 0.2f))
 
             scene!!.addSolid(Plane(-1f, Color(0f, 0f, 0f), true, 0.1f, 0f))
-            scene!!.addSolid(Wall(5f, Color(0f, 0f, 0f), true, 0.1f, 0f))
+            //scene!!.addSolid(Wall(5f, Color(0f, 0f, 0f), true, 0.1f, 0f))
 
             camera.position = cameraPosition
             camera.yaw = 0f

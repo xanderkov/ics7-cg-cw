@@ -20,24 +20,6 @@ class Plane(height: Float, color: Color?, private val checkerPattern: Boolean, r
     }
 
     override fun getTextureColor(point: Vector3): Color {
-        return if (checkerPattern) {
-            // in first or third quadrant of the checkerplane
-            if ((point.x > 0) and (point.z > 0) || (point.x < 0) and (point.z < 0)) {
-                if ((point.x.toInt() % 2 == 0) xor (point.z.toInt() % 2 != 0)) {
-                    Color.CORNSILS
-                } else {
-                    Color.BURGUNDY
-                }
-            } else {
-                // in second or fourth quadrant of the checkerplane
-                if ((point.x.toInt() % 2 == 0) xor (point.z.toInt() % 2 != 0)) {
-                    Color.BURGUNDY
-                } else {
-                    Color.CORNSILS
-                }
-            }
-        } else {
-            color
-        }
+        return Color.TREE
     }
 }

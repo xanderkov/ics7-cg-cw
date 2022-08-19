@@ -1,10 +1,12 @@
 package ui.view
 
+import javafx.beans.property.SimpleFloatProperty
 import javafx.beans.property.SimpleStringProperty
 import javafx.embed.swing.SwingFXUtils
 import javafx.geometry.Pos
 import javafx.scene.Parent
 import javafx.scene.image.ImageView
+import org.w3c.dom.events.EventTarget
 import raytracing.math.Vector3
 import raytracing.pixels.Color
 import raytracing.rendering.Camera
@@ -18,14 +20,29 @@ import java.awt.image.BufferedImage
 import java.io.IOException
 
 class SettingsView() : View("Settings") {
+
+    var resolution_slider = slider()
     override val root = hbox {
-        val resolution_slider = slider(0f, 1f, 0.25f)
-        
-        fun makeImageProperties() {
-            MainView.renderToImage(MainView.WIDTH, MainView.HEIGHT)
-            MainView.resolutionf = resolution_slider.value.toFloat()
+
+        alignment = Pos.CENTER
+        spacing = 10.0
+        val sliders = vbox {
+            alignment = Pos.CENTER
+            spacing = 10.0
+            label { text = "resolution" }
+            resolution_slider = slider {
+                min = 0.0
+                max = 1.0
+                value = 0.25
+            }
         }
-        
+
+        fun makeImageProperties() {
+            MainView.resolutionf = resolution_slider.value.toFloat()
+            MainView.renderToImage(MainView.WIDTH, MainView.HEIGHT)
+        }
+
+
         val camangles = vbox {
             alignment = Pos.CENTER
             spacing = 10.0
@@ -60,7 +77,7 @@ class SettingsView() : View("Settings") {
                 button {
                     text = "↓"
                     action {
-                        
+
                         MainView.camera.pitch += 20f
                         makeImageProperties()
                     }

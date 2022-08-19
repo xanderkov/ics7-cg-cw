@@ -17,16 +17,16 @@ class Cylinders(position: Vector3, private val radius: Float, private val height
         val ts1 = (height - ray.origin.y + position.y) / ray.direction.y
         var point = intersectionPoint.add(ray.direction.multiply(ts1))
 
-        if (point.x * point.x + point.z * point.z - radius * radius < 0)
+        if (point.x * point.x + point.z * point.z - radius * radius < 1e-4)
             isBelongToCylinderBase = true
 
         val ts2 = (-height - ray.origin.y + position.y) / ray.direction.y
         point = intersectionPoint.add(ray.direction.multiply(ts2))
 
-        if (point.x * point.x + point.z * point.z - radius * radius < 0)
+        if (point.x * point.x + point.z * point.z - radius * radius < 1e-4)
             isBelongToCylinderBase = true
 
-        val a: Float = (ray.direction.x * ray.direction.x) + (ray.direction.z * ray.direction.z)
+        val a: Float = ray.direction.x * ray.direction.x + ray.direction.z * ray.direction.z
 
         val b: Float = ray.origin.x * ray.direction.x - ray.direction.x * position.x + ray.origin.z * ray.direction.z -
                 ray.direction.z * position.z
@@ -38,7 +38,7 @@ class Cylinders(position: Vector3, private val radius: Float, private val height
 
         var t: Float = 0f
 
-        if (delta < 0) {
+        if (delta < 1e-4) {
             if (isBelongToCylinderBase) {
                 t = kotlin.math.min(ts1, ts2)
                 return ray.origin.add(ray.direction.multiply(t))
@@ -48,10 +48,13 @@ class Cylinders(position: Vector3, private val radius: Float, private val height
 
         val t1: Float = (-b - kotlin.math.sqrt(delta)) / (a)
         val t2: Float = (-b + kotlin.math.sqrt(delta)) / (a)
-        t = if (t1 < 0) t2 else t1
+        t = if (t1 < 1e-4) t2 else t1
 
-        if ((kotlin.math.abs(ray.origin.y + t * ray.direction.y - position.y) <= height) && t > 0)
-            return ray.origin.add(ray.direction.multiply(t))
+        if (kotlin.math.abs(ray.origin.y + t * ray.direction.y - position.y) < height)
+            if (t > 1e-4)
+                return ray.origin.add(ray.direction.multiply(t))
+            else return null
+
         if (!isBelongToCylinderBase) return null
         t = kotlin.math.min(ts1, ts2)
         return ray.origin.add(ray.direction.multiply(t))
@@ -59,8 +62,9 @@ class Cylinders(position: Vector3, private val radius: Float, private val height
     }
 
     override fun getNormalAt(point: Vector3): Vector3 {
-        return if (kotlin.math.abs(point.y - position.y) < height)
-            Vector3(point.x - position.x, 0f, point.z - position.z).normalize()
+        val normalIntersectionPoint = point.subtract(position)
+        return if (kotlin.math.abs(normalIntersectionPoint.y) < height)
+            Vector3(normalIntersectionPoint.x, 0f, normalIntersectionPoint.z).normalize()
         else (point.subtract(position).normalize())
     }
 
