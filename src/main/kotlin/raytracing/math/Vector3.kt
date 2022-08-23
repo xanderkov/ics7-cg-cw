@@ -85,6 +85,18 @@ class Vector3(x: kotlin.Float, y: kotlin.Float, z: kotlin.Float) {
         return floatArrayOf(x, y, z)
     }
 
+    operator fun plus(vec: Vector3): Vector3 {
+        return Vector3(x + vec.x, y + vec.y, z + vec.z)
+    }
+
+    operator fun minus(vec: Vector3): Vector3 {
+        return Vector3(x - vec.x, y - vec.y, z - vec.z)
+    }
+
+    operator fun times(vec: Vector3): Vector3 {
+        return Vector3(x * vec.x, y * vec.y, z * vec.z)
+    }
+
     companion object {
         fun distance(a: Vector3, b: Vector3): kotlin.Float {
             return Math.sqrt(
@@ -103,4 +115,5 @@ class Vector3(x: kotlin.Float, y: kotlin.Float, z: kotlin.Float) {
             return a.add(b.subtract(a).multiply(t))
         }
     }
+
 }

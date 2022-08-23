@@ -40,7 +40,7 @@ class Renderer {
             } else {
                 kotlin.math.max(
                     GLOBAL_ILLUMINATION,
-                    kotlin.math.min(1f, Vector3.dot(hit.normal!!, sceneLight.getPosition().subtract(hit.position)))
+                    kotlin.math.min(1f, Vector3.dot(hit.normal, sceneLight.getPosition().subtract(hit.position)))
                 )
             }
         }
@@ -50,7 +50,7 @@ class Renderer {
             val cameraDirection: Vector3 = scene.camera.position.subtract(hitPos).normalize()
             val lightDirection = hitPos.subtract(scene.light.getPosition()).normalize()
             val lightReflectionVector =
-                lightDirection.subtract(hit.normal!!.multiply(2 * Vector3.dot(lightDirection, hit.normal)))
+                lightDirection.subtract(hit.normal.multiply(2 * Vector3.dot(lightDirection, hit.normal)))
             val specularFactor =
                 kotlin.math.max(0f, kotlin.math.min(1f, Vector3.dot(lightReflectionVector, cameraDirection)))
             return specularFactor.toDouble().pow(2.0).toFloat() * hit.solid.reflectivity

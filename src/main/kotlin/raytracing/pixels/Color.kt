@@ -26,22 +26,30 @@ class Color(red: kotlin.Float, green: kotlin.Float, blue: kotlin.Float) {
 
     fun multiply(brightness: kotlin.Float): Color {
         var brightness: kotlin.Float = brightness
-        brightness = Math.min(1f, brightness)
+        brightness = kotlin.math.min(1f, brightness)
         return Color(red * brightness, green * brightness, blue * brightness)
     }
 
     fun add(other: Color): Color {
-        return Color(Math.min(1f, red + other.red), Math.min(1f, green + other.green), Math.min(1f, blue + other.blue))
+        return Color(kotlin.math.min(1f, red + other.red), kotlin.math.min(1f, green + other.green), kotlin.math.min(1f, blue + other.blue))
+    }
+
+    operator fun plus(other: Color): Color {
+        return Color(kotlin.math.min(1f, red + other.red), kotlin.math.min(1f, green + other.green), kotlin.math.min(1f, blue + other.blue))
+    }
+
+    operator fun times(other: Color): Color {
+        return Color(red * other.red, green * other.green, blue * other.blue)
     }
 
     fun addSelf(other: Color) {
-        red = Math.min(1f, red + other.red)
-        green = Math.min(1f, green + other.green)
-        blue = Math.min(1f, blue + other.blue)
+        red = kotlin.math.min(1f, red + other.red)
+        green = kotlin.math.min(1f, green + other.green)
+        blue = kotlin.math.min(1f, blue + other.blue)
     }
 
     fun add(brightness: kotlin.Float): Color {
-        return Color(Math.min(1f, red + brightness), Math.min(1f, green + brightness), Math.min(1f, blue + brightness))
+        return Color(kotlin.math.min(1f, red + brightness), kotlin.math.min(1f, green + brightness), kotlin.math.min(1f, blue + brightness))
     }
 
     val rGB: Int
@@ -65,10 +73,6 @@ class Color(red: kotlin.Float, green: kotlin.Float, blue: kotlin.Float) {
         return java.awt.Color(red, green, blue)
     }
 
-    fun toJavaColor(): javafx.scene.paint.Color {
-        return javafx.scene.paint.Color.rgb(red.toInt(), green.toInt(), blue.toInt())
-    }
-
     companion object {
         fun fromInt(argb: Int): Color {
             val b = argb and 0xFF
@@ -77,60 +81,12 @@ class Color(red: kotlin.Float, green: kotlin.Float, blue: kotlin.Float) {
             return Color(r / 255f, g / 255f, b / 255f)
         }
 
-        fun average(colors: Collection<Color>): Color {
-            var rSum = 0f
-            var gSum = 0f
-            var bSum = 0f
-            for (col in colors) {
-                rSum += col.red
-                gSum += col.green
-                bSum += col.blue
-            }
-            val colorCount = colors.size
-            return Color(rSum / colorCount, gSum / colorCount, bSum / colorCount)
-        }
-
-        fun average(colors: List<Color>, weights: List<kotlin.Float>): Color {
-            require(colors.size == weights.size) { "Specified color count does not match weight count." }
-            var rSum = 0f
-            var gSum = 0f
-            var bSum = 0f
-            var weightSum = 0f
-            for (i in colors.indices) {
-                val col = colors[i]
-                val weight = weights[i]
-                rSum += col.red * weight
-                gSum += col.green * weight
-                bSum += col.blue * weight
-                weightSum += weight
-            }
-            return Color(rSum / weightSum, gSum / weightSum, bSum / weightSum)
-        }
-
-        fun average(vararg colors: Color): Color {
-            var rSum = 0f
-            var gSum = 0f
-            var bSum = 0f
-            for (col in colors) {
-                rSum += col.red
-                gSum += col.green
-                bSum += col.blue
-            }
-            val colorCount = colors.size
-            return Color(rSum / colorCount, gSum / colorCount, bSum / colorCount)
-        }
-
         private fun lerp(a: kotlin.Float, b: kotlin.Float, t: kotlin.Float): kotlin.Float {
             return a + t * (b - a)
         }
 
         fun lerp(a: Color, b: Color, t: kotlin.Float): Color {
-            return Color(
-                lerp(a.red, b.red, t), lerp(a.green, b.green, t), lerp(
-                    a.blue,
-                    b.blue, t
-                )
-            )
+            return Color(lerp(a.red, b.red, t), lerp(a.green, b.green, t), lerp(a.blue, b.blue, t))
         }
 
         val BLACK = Color(0f, 0f, 0f)

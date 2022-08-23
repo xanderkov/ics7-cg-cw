@@ -51,9 +51,7 @@ class Cylinders(position: Vector3, private val radius: Float, private val height
         t = if (t1 < 1e-4) t2 else t1
 
         if (kotlin.math.abs(ray.origin.y + t * ray.direction.y - position.y) < height)
-            if (t > 1e-4)
-                return ray.origin.add(ray.direction.multiply(t))
-            else return null
+            return if (t > 1e-4) ray.origin.add(ray.direction.multiply(t)) else null
 
         if (!isBelongToCylinderBase) return null
         t = kotlin.math.min(ts1, ts2)
