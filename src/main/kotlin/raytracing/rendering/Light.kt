@@ -13,7 +13,4 @@ class Light(position: Vector3) {
         return position
     }
 
-    fun setPosition(position: Vector3) {
-        this.position = position
-    }
 }

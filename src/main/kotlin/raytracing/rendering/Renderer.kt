@@ -5,6 +5,7 @@ import raytracing.pixels.*
 import raytracing.solids.Solid
 import java.awt.Graphics
 import kotlin.math.pow
+import kotlin.math.*
 
 
 class Renderer {
@@ -38,9 +39,9 @@ class Renderer {
             return if (lightBlocker != null && lightBlocker.solid !== hit.solid) {
                 GLOBAL_ILLUMINATION // GLOBAL_ILLUMINATION = Minimum brightness
             } else {
-                kotlin.math.max(
+                max(
                     GLOBAL_ILLUMINATION,
-                    kotlin.math.min(1f, Vector3.dot(hit.normal, sceneLight.getPosition().subtract(hit.position)))
+                    min(1f, Vector3.dot(hit.normal, sceneLight.getPosition().subtract(hit.position)))
                 )
             }
         }
@@ -49,11 +50,12 @@ class Renderer {
             val hitPos: Vector3 = hit.position
             val cameraDirection: Vector3 = scene.camera.position.subtract(hitPos).normalize()
             val lightDirection = hitPos.subtract(scene.light.getPosition()).normalize()
-            val lightReflectionVector =
-                lightDirection.subtract(hit.normal.multiply(2 * Vector3.dot(lightDirection, hit.normal)))
-            val specularFactor =
-                kotlin.math.max(0f, kotlin.math.min(1f, Vector3.dot(lightReflectionVector, cameraDirection)))
-            return specularFactor.toDouble().pow(2.0).toFloat() * hit.solid.reflectivity
+            // косинус угла между источником света и нормалью
+            val lightcos = Vector3.dot(lightDirection, hit.normal)
+            val lightReflectionVector = lightDirection - (hit.normal.multiply(2 * lightcos))
+            // косинус угла между отраженным лучем и направлением луча
+            val specularFactor = max(0f, min(1f, Vector3.dot(lightReflectionVector, cameraDirection)))
+            return specularFactor.pow(2f) * hit.solid.reflectivity
         }
 
         private fun computePixelInfoAtHit(scene: Scene, hit: RayHit, recursionLimit: Int): PixelData {
@@ -67,14 +69,19 @@ class Renderer {
             val emission: Float = hitSolid.emission
 
             val reflection: PixelData
-            val reflectionVector = rayDir.subtract(hit.normal!!.multiply(2f * Vector3.dot(rayDir, hit.normal)))
+            val reflectionVector = rayDir.subtract(hit.normal.multiply(2f * Vector3.dot(rayDir, hit.normal)))
 
             // Add a little to avoid hitting the same solid again
             val reflectionRayOrigin = hitPos.add(reflectionVector.multiply(0.001f))
+
             val reflectionHit: RayHit? =
                 if (recursionLimit > 0) scene.raycast(Ray(reflectionRayOrigin, reflectionVector)) else null
+
             reflection = if (reflectionHit != null) {
                 computePixelInfoAtHit(scene, reflectionHit, recursionLimit - 1)
+
+
+
             } else {
                 val sbColor: Color = scene.skybox.getColor(reflectionVector)
                 PixelData(sbColor, Float.POSITIVE_INFINITY, sbColor.luminance * SKY_EMISSION)
@@ -88,7 +95,7 @@ class Renderer {
 
             return PixelData(
                 pixelColor, Vector3.distance(scene.camera.position, hitPos),
-                kotlin.math.min(1.0f, emission + reflection.emission * reflectivity + specularBrightness)
+                min(1.0f, emission + reflection.emission * reflectivity + specularBrightness)
             )
         }
 
