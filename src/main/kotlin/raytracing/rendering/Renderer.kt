@@ -12,7 +12,7 @@ class Renderer {
     companion object {
         private const val GLOBAL_ILLUMINATION = 0.2f
         private const val SKY_EMISSION = 0.5f
-        private const val MAX_REFLECTION_BOUNCES = 15
+        private const val MAX_REFLECTION_BOUNCES = 5
         private const val SHOW_SKYBOX = true
         private fun getNormalizedScreenCoordinates(x: Int, y: Int, width: Int, height: Int): FloatArray {
             val u: Float
@@ -58,6 +58,14 @@ class Renderer {
             return specularFactor.pow(2f) * hit.solid.reflectivity
         }
 
+        private fun RefractRay(I: Vector3, n: Vector3, cos: Float, theataT: Float, theataI: Float): Vector3 {
+            // Ошибка в n должно быть -n
+            if (cos < 0) return RefractRay(I, -n, -cos, theataI, theataT)
+            val eta = theataI / theataT
+            val k = 1 - eta * eta * (1 - cos * cos)
+            return if (k < 0) Vector3(1f, 0f, 0f) else I.multiply(eta) + n.multiply(eta * cos - sqrt(k))
+        }
+
         private fun computePixelInfoAtHit(scene: Scene, hit: RayHit, recursionLimit: Int): PixelData {
             val hitPos: Vector3 = hit.position
             val rayDir: Vector3 = hit.ray.direction
@@ -69,21 +77,33 @@ class Renderer {
             val emission: Float = hitSolid.emission
 
             val reflection: PixelData
-            val reflectionVector = rayDir.subtract(hit.normal.multiply(2f * Vector3.dot(rayDir, hit.normal)))
+            val reflectionVector = rayDir - (hit.normal.multiply(2f * Vector3.dot(rayDir, hit.normal)))
+
+            val directionCos: Float = Vector3.dot(rayDir, hit.normal)
+            // Теститруем преломление (пока основываясь на материле преломления)
+            val refractRay = RefractRay(rayDir, hit.normal, directionCos, hitSolid.fractivity, 1f)
 
             // Add a little to avoid hitting the same solid again
             val reflectionRayOrigin = hitPos.add(reflectionVector.multiply(0.001f))
-
+            val refractRayOrigin = hitPos.add(refractRay.multiply(0.001f))
             val reflectionHit: RayHit? =
                 if (recursionLimit > 0) scene.raycast(Ray(reflectionRayOrigin, reflectionVector)) else null
 
+            val refractHit: RayHit? =
+                if (recursionLimit > 0) scene.raycast(Ray(refractRayOrigin, refractRay)) else null
+
             reflection = if (reflectionHit != null) {
                 computePixelInfoAtHit(scene, reflectionHit, recursionLimit - 1)
-
-
-
             } else {
                 val sbColor: Color = scene.skybox.getColor(reflectionVector)
+                PixelData(sbColor, Float.POSITIVE_INFINITY, sbColor.luminance * SKY_EMISSION)
+            }
+
+            val refraction = if (refractHit != null) {
+                computePixelInfoAtHit(scene, refractHit, recursionLimit - 1)
+            }
+            else {
+                val sbColor: Color = scene.skybox.getColor(refractRay)
                 PixelData(sbColor, Float.POSITIVE_INFINITY, sbColor.luminance * SKY_EMISSION)
             }
             val pixelColor: Color = Color.lerp(hitColor, reflection.color, reflectivity) // Reflected color
@@ -91,11 +111,13 @@ class Renderer {
                 .add(specularBrightness) // Specular lighting
                 .add(hitColor.multiply(emission)) // Object emission
                 .add(reflection.color.multiply(reflection.emission * reflectivity)) // Indirect illumination
+                .add(refraction.color.multiply(refraction.emission * hitSolid.fractivity))
 
 
             return PixelData(
                 pixelColor, Vector3.distance(scene.camera.position, hitPos),
-                min(1.0f, emission + reflection.emission * reflectivity + specularBrightness)
+                min(1.0f, emission + reflection.emission * reflectivity + specularBrightness +
+                        refraction.emission * hitSolid.fractivity)
             )
         }
 

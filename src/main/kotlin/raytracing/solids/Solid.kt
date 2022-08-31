@@ -5,7 +5,7 @@ import raytracing.math.Vector3
 import raytracing.pixels.Color
 
 
-abstract class Solid(var position: Vector3, var color: Color, var reflectivity: Float, var emission: Float) {
+abstract class Solid(var position: Vector3, var color: Color, var reflectivity: Float, var fractivity: Float, var emission: Float) {
 
     abstract fun calculateIntersection(ray: Ray): Vector3?
     abstract fun getNormalAt(point: Vector3): Vector3

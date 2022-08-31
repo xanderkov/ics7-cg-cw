@@ -4,8 +4,8 @@ import raytracing.math.Ray
 import raytracing.math.Vector3
 import raytracing.pixels.Color
 
-class Sphere(position: Vector3, private val radius: Float, color: Color, reflectivity: Float, emission: Float):
-    Solid(position, color, reflectivity, emission) {
+class Sphere(position: Vector3, private val radius: Float, color: Color, reflectivity: Float, fractivity: Float, emission: Float):
+    Solid(position, color, reflectivity, fractivity, emission) {
 
     override fun calculateIntersection(ray: Ray): Vector3? {
         val t: Float = Vector3.dot(position.subtract(ray.origin), ray.direction)
@@ -13,7 +13,7 @@ class Sphere(position: Vector3, private val radius: Float, color: Color, reflect
         val y = position.subtract(p).length()
 
         return if (y < radius) {
-            val x = Math.sqrt((radius * radius - y * y).toDouble()).toFloat()
+            val x = kotlin.math.sqrt(radius * radius - y * y)
             val t1 = t - x
             if (t1 > 0) {
                 ray.origin.add(ray.direction.multiply(t1))

@@ -4,8 +4,8 @@ import raytracing.math.Ray
 import raytracing.math.Vector3
 import raytracing.pixels.Color
 
-class Wall(width: Float, color: Color?, private val checkerPattern: Boolean, reflectivity: Float, emission: Float) :
-    Solid(Vector3(0f, 0f, width), color!!, reflectivity, emission) {
+class Wall(width: Float, color: Color?, private val checkerPattern: Boolean, reflectivity: Float, fractivity: Float, emission: Float) :
+    Solid(Vector3(0f, 0f, width), color!!, reflectivity, emission, fractivity) {
 
     override fun calculateIntersection(ray: Ray): Vector3? {
         val t: Float = -(ray.origin.z - position.z) / ray.direction.z

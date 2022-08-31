@@ -5,6 +5,7 @@ import kotlin.FloatArray
 import kotlin.String
 import kotlin.floatArrayOf
 import kotlin.require
+import kotlin.math.*
 
 class Vector3(x: kotlin.Float, y: kotlin.Float, z: kotlin.Float) {
     var x: kotlin.Float
@@ -39,7 +40,7 @@ class Vector3(x: kotlin.Float, y: kotlin.Float, z: kotlin.Float) {
     }
 
     fun length(): kotlin.Float {
-        return Math.sqrt((x * x + y * y + z * z).toDouble()).toFloat()
+        return sqrt(x * x + y * y + z * z)
     }
 
     fun normalize(): Vector3 {
@@ -95,6 +96,10 @@ class Vector3(x: kotlin.Float, y: kotlin.Float, z: kotlin.Float) {
 
     operator fun times(vec: Vector3): Vector3 {
         return Vector3(x * vec.x, y * vec.y, z * vec.z)
+    }
+
+    operator fun unaryMinus(): Vector3 {
+        return Vector3(-x, -y, -z)
     }
 
     companion object {

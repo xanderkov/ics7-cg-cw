@@ -22,9 +22,11 @@ class Scene {
         for (solid in solids) {
             if (solid == null) continue
             val hitPos: Vector3? = solid.calculateIntersection(ray)
-            if (hitPos != null && (closestHit == null ||
-                        Vector3.distance(closestHit.position, ray.origin) > Vector3.distance(hitPos, ray.origin))) {
-                closestHit = RayHit(ray, solid, hitPos)
+            if (hitPos != null) {
+                val oldRay = Vector3.distance(hitPos, ray.origin)
+                if (closestHit == null || Vector3.distance(closestHit.position, ray.origin) > oldRay) {
+                    closestHit = RayHit(ray, solid, hitPos)
+                }
             }
         }
         return closestHit

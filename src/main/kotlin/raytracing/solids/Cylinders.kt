@@ -5,8 +5,8 @@ import raytracing.math.Ray
 import raytracing.math.Vector3
 import raytracing.pixels.Color
 
-class Cylinders(position: Vector3, private val radius: Float, private val height: Float, color: Color, reflectivity: Float, emission: Float):
-    Solid(position, color, reflectivity, emission) {
+class Cylinders(position: Vector3, private val radius: Float, private val height: Float, color: Color, reflectivity: Float, fractivity: Float, emission: Float):
+    Solid(position, color, reflectivity, emission, fractivity) {
 
     override fun calculateIntersection(ray: Ray): Vector3? {
 
