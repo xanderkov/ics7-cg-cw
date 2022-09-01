@@ -10,17 +10,19 @@ class Cylinders(position: Vector3, private val radius: Float, private val height
 
     override fun calculateIntersection(ray: Ray): Vector3? {
 
-        val intersectionPoint = ray.origin.subtract(position)
+        val eps = 0.001f
+
+        val intersectionPoint = ray.origin - position
 
         var isBelongToCylinderBase = false
 
-        val ts1 = (height - ray.origin.y + position.y) / ray.direction.y
-        var point = intersectionPoint.add(ray.direction.multiply(ts1))
+        val ts1 = (height - ray.origin.y + position.y) / (ray.direction.y + eps)
+        var point = intersectionPoint + ray.direction.multiply(ts1)
 
         if (point.x * point.x + point.z * point.z - radius * radius < 1e-4)
             isBelongToCylinderBase = true
 
-        val ts2 = (-height - ray.origin.y + position.y) / ray.direction.y
+        val ts2 = (-height - ray.origin.y + position.y) / (ray.direction.y + eps)
         point = intersectionPoint.add(ray.direction.multiply(ts2))
 
         if (point.x * point.x + point.z * point.z - radius * radius < 1e-4)

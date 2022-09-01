@@ -32,8 +32,8 @@ class Renderer {
             // Raytrace to light to check if something blocks the light
             val lightBlocker = scene.raycast(
                 Ray(
-                    sceneLight.getPosition(),
-                    hit.position.subtract(sceneLight.getPosition()).normalize()
+                    sceneLight.position,
+                    hit.position.subtract(sceneLight.position).normalize()
                 )
             )
             return if (lightBlocker != null && lightBlocker.solid !== hit.solid) {
@@ -41,7 +41,7 @@ class Renderer {
             } else {
                 max(
                     GLOBAL_ILLUMINATION,
-                    min(1f, Vector3.dot(hit.normal, sceneLight.getPosition().subtract(hit.position)))
+                    min(1f, Vector3.dot(hit.normal, sceneLight.position - hit.position))
                 )
             }
         }
@@ -49,15 +49,19 @@ class Renderer {
         private fun getSpecularBrightness(scene: Scene, hit: RayHit): Float {
             val hitPos: Vector3 = hit.position
             val cameraDirection: Vector3 = scene.camera.position.subtract(hitPos).normalize()
-            val lightDirection = hitPos.subtract(scene.light.getPosition()).normalize()
+            val lightDirection = hitPos - (scene.light.position).normalize()
             // косинус угла между источником света и нормалью
             val lightcos = Vector3.dot(lightDirection, hit.normal)
-            val lightReflectionVector = lightDirection - (hit.normal.multiply(2 * lightcos))
+
             // косинус угла между отраженным лучем и направлением луча
+            val lightReflectionVector = lightDirection - (hit.normal.multiply(2 * lightcos))
+
             val specularFactor = max(0f, min(1f, Vector3.dot(lightReflectionVector, cameraDirection)))
             return specularFactor.pow(2f) * hit.solid.reflectivity
         }
 
+        // Преломление по закону Снеллиуса
+        // I - угол падения
         private fun RefractRay(I: Vector3, n: Vector3, cos: Float, theataT: Float, theataI: Float): Vector3 {
             // Ошибка в n должно быть -n
             if (cos < 0) return RefractRay(I, -n, -cos, theataI, theataT)
@@ -75,17 +79,22 @@ class Renderer {
             val specularBrightness: Float = getSpecularBrightness(scene, hit)
             val reflectivity: Float = hitSolid.reflectivity
             val emission: Float = hitSolid.emission
+            val fractivity = hitSolid.fractivity
 
             val reflection: PixelData
-            val reflectionVector = rayDir - (hit.normal.multiply(2f * Vector3.dot(rayDir, hit.normal)))
 
             val directionCos: Float = Vector3.dot(rayDir, hit.normal)
-            // Теститруем преломление (пока основываясь на материле преломления)
-            val refractRay = RefractRay(rayDir, hit.normal, directionCos, hitSolid.fractivity, 1f)
+            // Отраженный луч
+            val reflectionVector = rayDir - (hit.normal.multiply(2f * directionCos))
 
-            // Add a little to avoid hitting the same solid again
+
+            // Теститруем преломление
+            val refractRay = RefractRay(rayDir, hit.normal, directionCos, fractivity, 1f)
+
+            // Добавим eps, чтобы лучи не попадали в одно и то же место
             val reflectionRayOrigin = hitPos.add(reflectionVector.multiply(0.001f))
             val refractRayOrigin = hitPos.add(refractRay.multiply(0.001f))
+
             val reflectionHit: RayHit? =
                 if (recursionLimit > 0) scene.raycast(Ray(reflectionRayOrigin, reflectionVector)) else null
 
@@ -106,23 +115,23 @@ class Renderer {
                 val sbColor: Color = scene.skybox.getColor(refractRay)
                 PixelData(sbColor, Float.POSITIVE_INFINITY, sbColor.luminance * SKY_EMISSION)
             }
+
             val pixelColor: Color = Color.lerp(hitColor, reflection.color, reflectivity) // Reflected color
                 .multiply(brightness) // Diffuse lighting
                 .add(specularBrightness) // Specular lighting
                 .add(hitColor.multiply(emission)) // Object emission
-                .add(reflection.color.multiply(reflection.emission * reflectivity)) // Indirect illumination
-                .add(refraction.color.multiply(refraction.emission * hitSolid.fractivity))
+                .add(reflection.color.multiply(emission * reflectivity)) // Indirect illumination
+                .add(refraction.color.multiply(emission * fractivity))
 
+            val depthPixel = Vector3.distance(scene.camera.position, hitPos)
+            val pixelEmission = min(1.0f, emission + reflection.emission * reflectivity + specularBrightness +
+                    refraction.emission * fractivity)
 
-            return PixelData(
-                pixelColor, Vector3.distance(scene.camera.position, hitPos),
-                min(1.0f, emission + reflection.emission * reflectivity + specularBrightness +
-                        refraction.emission * hitSolid.fractivity)
-            )
+            return PixelData(pixelColor, depthPixel, pixelEmission)
         }
 
         private fun computePixelInfo(scene: Scene, u: Float, v: Float): PixelData {
-            val eyePos = Vector3(0f, 0f, (-1 / kotlin.math.tan(Math.toRadians(scene.camera.fOV / 2.0))).toFloat())
+            val eyePos = Vector3(0f, 0f, (-1 / tan(Math.toRadians(scene.camera.fOV / 2.0))).toFloat())
             val cam = scene.camera
             val rayDir = Vector3(u, v, 0f).subtract(eyePos).normalize().rotateYP(cam.yaw, cam.pitch)
             val hit = scene.raycast(Ray(eyePos.add(cam.position), rayDir))

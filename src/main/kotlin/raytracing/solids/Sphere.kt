@@ -8,7 +8,7 @@ class Sphere(position: Vector3, private val radius: Float, color: Color, reflect
     Solid(position, color, reflectivity, fractivity, emission) {
 
     override fun calculateIntersection(ray: Ray): Vector3? {
-        val t: Float = Vector3.dot(position.subtract(ray.origin), ray.direction)
+        val t: Float = Vector3.dot(position - ray.origin, ray.direction)
         val p: Vector3 = ray.origin.add(ray.direction.multiply(t))
         val y = position.subtract(p).length()
 
