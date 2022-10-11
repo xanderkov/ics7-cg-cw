@@ -5,7 +5,7 @@ import raytracing.math.Vector3
 import raytracing.pixels.Color
 
 class Plane(height: Float, color: Color?, private val checkerPattern: Boolean, reflectivity: Float, fractivity: Float, emission: Float) :
-    Solid(Vector3(0f, height, 0f), color!!, reflectivity, emission, fractivity) {
+    Solid(Vector3(0f, height, 0f), color!!, reflectivity, fractivity, emission) {
 
     override fun calculateIntersection(ray: Ray): Vector3? {
 

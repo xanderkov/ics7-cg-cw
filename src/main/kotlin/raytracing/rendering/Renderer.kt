@@ -4,6 +4,7 @@ import raytracing.math.*
 import raytracing.pixels.*
 import raytracing.solids.Solid
 import java.awt.Graphics
+import kotlin.Double.Companion.POSITIVE_INFINITY
 import kotlin.math.pow
 import kotlin.math.*
 
@@ -14,6 +15,10 @@ class Renderer {
         private const val SKY_EMISSION = 0.5f
         private const val MAX_REFLECTION_BOUNCES = 5
         private const val SHOW_SKYBOX = true
+
+        private const val minDistance = 0
+        private const val maxDistance = POSITIVE_INFINITY
+
         private fun getNormalizedScreenCoordinates(x: Int, y: Int, width: Int, height: Int): FloatArray {
             val u: Float
             val v: Float
@@ -64,7 +69,7 @@ class Renderer {
         // I - угол падения
         private fun RefractRay(I: Vector3, n: Vector3, cos: Float, theataT: Float, theataI: Float): Vector3 {
             // Ошибка в n должно быть -n
-            if (cos < 0) return RefractRay(I, -n, -cos, theataI, theataT)
+            if (cos < 0) return RefractRay(I, n, -cos, theataI, theataT)
             val eta = theataI / theataT
             val k = 1 - eta * eta * (1 - cos * cos)
             return if (k < 0) Vector3(1f, 0f, 0f) else I.multiply(eta) + n.multiply(eta * cos - sqrt(k))
@@ -101,6 +106,7 @@ class Renderer {
             val refractHit: RayHit? =
                 if (recursionLimit > 0) scene.raycast(Ray(refractRayOrigin, refractRay)) else null
 
+            // Отражаймость
             reflection = if (reflectionHit != null) {
                 computePixelInfoAtHit(scene, reflectionHit, recursionLimit - 1)
             } else {
@@ -108,6 +114,7 @@ class Renderer {
                 PixelData(sbColor, Float.POSITIVE_INFINITY, sbColor.luminance * SKY_EMISSION)
             }
 
+            // Преломление
             val refraction = if (refractHit != null) {
                 computePixelInfoAtHit(scene, refractHit, recursionLimit - 1)
             }
@@ -119,15 +126,22 @@ class Renderer {
             val pixelColor: Color = Color.lerp(hitColor, reflection.color, reflectivity) // Reflected color
                 .multiply(brightness) // Diffuse lighting
                 .add(specularBrightness) // Specular lighting
-                .add(hitColor.multiply(emission)) // Object emission
-                .add(reflection.color.multiply(emission * reflectivity)) // Indirect illumination
-                .add(refraction.color.multiply(emission * fractivity))
+                .add(reflection.color.multiply(reflectivity)) // Indirect illumination
+                .add(refraction.color.multiply(fractivity))
 
             val depthPixel = Vector3.distance(scene.camera.position, hitPos)
-            val pixelEmission = min(1.0f, emission + reflection.emission * reflectivity + specularBrightness +
-                    refraction.emission * fractivity)
+            val pixelEmission = min(1.0f, emission + reflection.emission * reflectivity + specularBrightness + fractivity)
 
             return PixelData(pixelColor, depthPixel, pixelEmission)
+        }
+
+
+        private fun computeRay(scene: Scene, hit: RayHit, recursionLimit: Int): PixelData {
+            val hitPos: Vector3 = hit.position
+            val rayDir: Vector3 = hit.ray.direction
+            TODO()
+
+
         }
 
         private fun computePixelInfo(scene: Scene, u: Float, v: Float): PixelData {

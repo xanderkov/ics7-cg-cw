@@ -63,9 +63,11 @@ class MainView : View("Cup and Spoon") {
 
             //scene!!.addSolid(Sphere(Vector3(-2f, 0.7f, -1f), 1.8f, Color.GREEN, 0.5f, 0.5f, 0f))
 
-            scene!!.addSolid(Box(Vector3(0f, 0f, 2f), Vector3(1f, 1f, 1f), Color.BLUE, 0.5f, 0.5f, 0f))
+            scene!!.addSolid(Box(Vector3(0f, 0f, 2f), Vector3(1f, 1f, 1f), Color.BLACK, 0.7f, 0.1f, 0f))
 
-            scene!!.addSolid(Cylinders(Vector3(-4f, 1.5f, 2f), 1f, 1f, Color.DARK_GRAY, 0.1f, 0.5f, 0f))
+            scene!!.addSolid(Cylinders(Vector3(0f, 0f, 0f), 1f, 1f, Color.DARK_GRAY, 0.1f, 0.8f, 0f))
+
+            scene!!.addSolid(Cylinders(Vector3(-2f, 0f, 0f), 1f, 0.5f, Color.BLUE, 0.9f, 0.7f, 0f))
 
             scene!!.addSolid(Plane(-1f, Color(0f, 0f, 0f), true, 0.1f, 0f, 0f))
             //scene!!.addSolid(Wall(5f, Color(0f, 0f, 0f), true, 0.1f, 0f, 0f))
