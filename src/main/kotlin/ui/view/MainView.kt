@@ -56,16 +56,16 @@ class MainView : View("Cup and Spoon") {
         init {
             scene = Scene()
             camera = scene!!.camera
-            scene!!.light.position = (Vector3(-1f, 4f, 1f))
-            cameraPosition.translate(Vector3(-0.5f, 0f, -1f))
+            scene!!.light.position = (Vector3(-1f, 4f, 2f))
+            cameraPosition.translate(Vector3(-0.5f, 0.5f, -3f))
 
             //scene!!.addSolid(Sphere(Vector3(2f, 0.5f, 0f), 1.4f, Color.WHITE, 0.1f, 0.8f, 0f))
 
             //scene!!.addSolid(Sphere(Vector3(-2f, 0.7f, -1f), 1.8f, Color.GREEN, 0.5f, 0.5f, 0f))
 
-            scene!!.addSolid(Box(Vector3(0f, 0f, 0f), Vector3(0.5f, 0.5f, 0.5f), Color.BLACK, 0f, 0f, 0.2f))
-            scene!!.addSolid(Box(Vector3(0f, 0.5f, 0f), Vector3(0.5f, 1f, 0.5f), Color.BLACK, 0f, 0f, 0.2f))
-            scene!!.addSolid(Box(Vector3(0f, 1f, 0f), Vector3(0.5f, 1.5f, 0.5f), Color.BLACK, 0f, 0f, 0.2f))
+            scene!!.addSolid(Box(Vector3(0f, 0f, 0f), Vector3(0.5f, 0.5f, 0.5f), Color.BLACK, 0.1f, 0f, 0.2f))
+            scene!!.addSolid(Box(Vector3(0f, 0.5f, 0f), Vector3(0.5f, 1f, 0.5f), Color.BLACK, 0.1f, 0f, 0.2f))
+            scene!!.addSolid(Box(Vector3(0f, 1f, 0f), Vector3(0.5f, 1.5f, 0.5f), Color.BLACK, 0.1f, 0f, 0.2f))
 
             scene!!.addSolid(Cylinders(Vector3(0f, 0f, 0f), 1f, 1f, Color.DARK_GRAY, 0.1f, 0.8f, 0f))
 

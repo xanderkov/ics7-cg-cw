@@ -4,65 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cb45eb4a-f565-4e5c-ae45-cb5b0ecce889" name="Changes" comment="Refraction works now">
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/codeStyles/codeStyleConfig.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/kotlin/raytracing/solids/Rectangle.kt" afterDir="false" />
+    <list default="true" id="cb45eb4a-f565-4e5c-ae45-cb5b0ecce889" name="Changes" comment="I have done it">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/kotlinc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/javafx_sdk_18_0.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/kurov/722_Forma otcheta studentov o praktike.doc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kurov/722_Forma otcheta studentov o praktike.doc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/kurov/797_Blank KR-2018.doc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kurov/797_Blank KR-2018.doc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/kurov/872_SHablon zadaniya na praktiku.doc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kurov/872_SHablon zadaniya na praktiku.doc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/kurov/GOST_732_2001_otch_o_NIR.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kurov/GOST_732_2001_otch_o_NIR.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/kurov/iu7-56-22-рук студ.doc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kurov/iu7-56-22-рук студ.doc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/kurov/Задание на курсовой проект пример.doc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kurov/Задание на курсовой проект пример.doc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/kurov/ПРАКТИКА осн положения.docx" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kurov/ПРАКТИКА осн положения.docx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/kurov/Требования к зачету по практике.docx" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kurov/Требования к зачету по практике.docx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/kurov/Указания по содержанию проекта.doc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kurov/Указания по содержанию проекта.doc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/kurov/треб к оформлению проекта.doc" beforeDir="false" afterPath="$PROJECT_DIR$/docs/kurov/треб к оформлению проекта.doc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/summer practice/Практика кг Ковель.docx" beforeDir="false" afterPath="$PROJECT_DIR$/docs/summer practice/Практика кг Ковель.docx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/docs/summer practice/Практика кг Ковель.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/docs/summer practice/Практика кг Ковель.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ics7-cg-cw.iml" beforeDir="false" afterPath="$PROJECT_DIR$/ics7-cg-cw.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/raytracing/math/Line.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/raytracing/math/Line.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/raytracing/math/Ray.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/raytracing/math/Ray.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/raytracing/math/RayHit.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/raytracing/math/RayHit.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/raytracing/math/Vector3.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/raytracing/math/Vector3.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/raytracing/pixels/Color.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/raytracing/pixels/Color.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/raytracing/pixels/Material.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/raytracing/pixels/Material.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/raytracing/pixels/PixelBuffer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/raytracing/pixels/PixelBuffer.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/raytracing/pixels/PixelData.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/raytracing/pixels/PixelData.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/raytracing/rendering/Camera.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/raytracing/rendering/Camera.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/raytracing/rendering/Light.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/raytracing/rendering/Light.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/raytracing/rendering/Renderer.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/raytracing/rendering/Renderer.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/raytracing/rendering/Scene.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/raytracing/rendering/Scene.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/raytracing/rendering/Skybox.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/raytracing/rendering/Skybox.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/raytracing/solids/Box.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/raytracing/solids/Box.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/raytracing/solids/Cylinders.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/raytracing/solids/Cylinders.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/raytracing/solids/Plane.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/raytracing/solids/Plane.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/raytracing/solids/Solid.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/raytracing/solids/Solid.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/raytracing/solids/Sphere.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/raytracing/solids/Sphere.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/raytracing/solids/Wall.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/raytracing/solids/Wall.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ui/MyApp.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ui/MyApp.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/ui/app/Styles.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ui/app/Styles.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/ui/view/MainView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ui/view/MainView.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/ui/view/SettingsView.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/ui/view/SettingsView.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/Sky.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/Sky.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/god.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/god.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/output.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/output.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/tornado.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/tornado.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Sky.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/Sky.jpg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/god.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/god.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/output.png" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/output.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/tornado.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/tornado.jpg" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +93,7 @@
       <workItem from="1661792918003" duration="8365000" />
       <workItem from="1661969036566" duration="10963000" />
       <workItem from="1665509084923" duration="8317000" />
-      <workItem from="1667117244787" duration="6490000" />
+      <workItem from="1667117244787" duration="9140000" />
     </task>
     <task id="LOCAL-00001" summary="Changed some code">
       <created>1661281002468</created>
@@ -200,6 +152,8 @@
     <MESSAGE value="Added some refraction" />
     <MESSAGE value="Some small challanges. Cylinders.kt - bad" />
     <MESSAGE value="Refraction works now" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refraction works now" />
+    <MESSAGE value="Я скоро кончу" />
+    <MESSAGE value="I have done it" />
+    <option name="LAST_COMMIT_MESSAGE" value="I have done it" />
   </component>
 </project>

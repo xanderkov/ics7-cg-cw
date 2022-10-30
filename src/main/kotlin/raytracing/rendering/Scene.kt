@@ -10,7 +10,7 @@ import java.util.concurrent.CopyOnWriteArrayList
 class Scene {
     val camera: Camera = Camera()
     val light: Light = Light(Vector3(-1f, 2f, -1f))
-    private val solids: CopyOnWriteArrayList<Solid> = CopyOnWriteArrayList()
+    val solids: CopyOnWriteArrayList<Solid> = CopyOnWriteArrayList()
     val skybox: Skybox = Skybox("Sky.jpg")
 
     fun addSolid(solid: Solid) {

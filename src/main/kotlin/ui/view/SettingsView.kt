@@ -9,6 +9,14 @@ class SettingsView() : View("Settings") {
     var lightPosX = textfield()
     var lightPosY = textfield()
     var lightPosZ = textfield()
+    var cupSliderR = slider()
+    var cupSliderF = slider()
+
+    var waterSliderR = slider()
+    var waterSliderF = slider()
+
+    var boxSliderR = slider()
+    var boxSliderF = slider()
 
     override val root = hbox {
 
@@ -17,7 +25,7 @@ class SettingsView() : View("Settings") {
         val sliders = vbox {
             alignment = Pos.CENTER
             spacing = 10.0
-            label { text = "resolution" }
+            label { text = "Разрешающая способность" }
             resolution_slider = slider {
                 min = 0.0
                 max = 1.0
@@ -34,17 +42,70 @@ class SettingsView() : View("Settings") {
                     alignment = Pos.CENTER
                     spacing = 10.0
                     form {
-                        fieldset("Light position") {
-                            field("Light position x") {
+                        fieldset("Позиция света") {
+                            field("Позиция света x") {
                                 lightPosX = textfield("-1")
                             }
-                             field("Light position y") {
+                             field("Позиция света y") {
                                 lightPosY = textfield("4")
                             }
-                            field("Light position z") {
+                            field("Позиция света z") {
                                 lightPosZ = textfield("1")
                             }
                         }
+                    }
+                }
+            }
+        }
+
+        vbox {
+            alignment = Pos.CENTER
+            spacing = 10.0
+            run {
+                vbox {
+                    alignment = Pos.CENTER
+                    spacing = 10.0
+
+                    label { text = "Коэффициент поглощения \nчаши (внешний цилиндр)" }
+                    cupSliderR = slider {
+                        min = 0.01
+                        max = 1.0
+                        value = 0.1
+                    }
+
+                    label { text = "Коэффициент преломления \nчаши (внешний цилиндр)" }
+                    cupSliderF = slider {
+                        min = 0.01
+                        max = 1.0
+                        value = 0.8
+                    }
+
+                    label { text = "Коэффициент поглощения \nжидкости (внетренний цилиндр)" }
+                    waterSliderR = slider {
+                        min = 0.01
+                        max = 1.0
+                        value = 0.1
+                    }
+
+                    label { text = "Коэффициент преломления \nжидкости (внетренний цилиндр)" }
+                    waterSliderF = slider {
+                        min = 0.01
+                        max = 1.0
+                        value = 0.8
+                    }
+
+                    label { text = "Коэффициент поглощения \nСтержня" }
+                    boxSliderR = slider {
+                        min = 0.01
+                        max = 1.0
+                        value = 0.8
+                    }
+
+                    label { text = "Коэффициент преломления \nСтержня" }
+                    boxSliderF = slider {
+                        min = 0.01
+                        max = 1.0
+                        value = 0.8
                     }
                 }
             }
@@ -54,8 +115,21 @@ class SettingsView() : View("Settings") {
             MainView.resolutionf = resolution_slider.value.toFloat()
 
             MainView.scene!!.light.position.x = lightPosX.text.toFloat()
-            MainView.scene!!.light.position.y = lightPosX.text.toFloat()
-            MainView.scene!!.light.position.z = lightPosX.text.toFloat()
+            MainView.scene!!.light.position.y = lightPosY.text.toFloat()
+            MainView.scene!!.light.position.z = lightPosZ.text.toFloat()
+
+            MainView.scene!!.solids[3].reflectivity = waterSliderR.value.toFloat()
+            MainView.scene!!.solids[3].fractivity = waterSliderF.value.toFloat()
+
+            MainView.scene!!.solids[4].reflectivity = cupSliderR.value.toFloat()
+            MainView.scene!!.solids[4].fractivity = cupSliderF.value.toFloat()
+
+            MainView.scene!!.solids[0].reflectivity = boxSliderR.value.toFloat()
+            MainView.scene!!.solids[0].fractivity = boxSliderF.value.toFloat()
+            MainView.scene!!.solids[1].reflectivity = boxSliderR.value.toFloat()
+            MainView.scene!!.solids[1].fractivity = boxSliderF.value.toFloat()
+            MainView.scene!!.solids[2].reflectivity = boxSliderR.value.toFloat()
+            MainView.scene!!.solids[2].fractivity = boxSliderF.value.toFloat()
 
             MainView.renderToImage(MainView.WIDTH, MainView.HEIGHT)
         }
@@ -65,7 +139,7 @@ class SettingsView() : View("Settings") {
             alignment = Pos.CENTER
             spacing = 10.0
             run {
-                label { text = "Camera \n Angles" }
+                label { text = "Камера \n Углы поворота" }
                 button {
                     text = "↑"
                     action {
@@ -107,9 +181,9 @@ class SettingsView() : View("Settings") {
             alignment = Pos.CENTER
             spacing = 10.0
             run {
-                label { text = "Camera \n Motion" }
+                label { text = "Камера \n Позиция" }
                 button {
-                    text = "W"
+                    text = "Вперед"
                     action {
                         MainView.camera.position.z += 0.2f
                         makeImageProperties()
@@ -119,14 +193,14 @@ class SettingsView() : View("Settings") {
                     alignment = Pos.CENTER
                     spacing = 10.0
                     button {
-                        text = "A"
+                        text = "Влево"
                         action {
                             MainView.camera.position.x -= 0.2f
                             makeImageProperties()
                         }
                     }
                     button {
-                        text = "D"
+                        text = "Вправо"
                         action {
                             MainView.camera.position.x += 0.2f
                             makeImageProperties()
@@ -135,7 +209,7 @@ class SettingsView() : View("Settings") {
 
                 }
                 button {
-                    text = "S"
+                    text = "Назад"
                     action {
                         MainView.camera.position.z -= 0.2f
                         makeImageProperties()
@@ -145,14 +219,14 @@ class SettingsView() : View("Settings") {
                     alignment = Pos.CENTER
                     spacing = 10.0
                     button {
-                        text = "Shift"
+                        text = "Вниз"
                         action {
                             MainView.camera.position.y -= 0.2f
                             makeImageProperties()
                         }
                     }
                     button {
-                        text = "Space"
+                        text = "Вверх"
                         action {
                             MainView.camera.position.y += 0.2f
                             makeImageProperties()
