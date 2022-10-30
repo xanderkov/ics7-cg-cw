@@ -1,5 +1,5 @@
 package raytracing.math
-
+import kotlin.Float
 class Ray(origin: Vector3, direction: Vector3) {
     val origin: Vector3
     val direction: Vector3

@@ -126,7 +126,7 @@ class Renderer {
             val pixelColor: Color = Color.lerp(hitColor, reflection.color, reflectivity) // Reflected color
                 .multiply(brightness) // Diffuse lighting
                 .add(specularBrightness) // Specular lighting
-                .add(reflection.color.multiply(reflectivity)) // Indirect illumination
+                .add(reflection.color.multiply(reflectivity * emission)) // Indirect illumination
                 .add(refraction.color.multiply(fractivity))
 
             val depthPixel = Vector3.distance(scene.camera.position, hitPos)

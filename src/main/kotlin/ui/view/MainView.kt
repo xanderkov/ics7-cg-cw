@@ -59,15 +59,19 @@ class MainView : View("Cup and Spoon") {
             scene!!.light.position = (Vector3(-1f, 4f, 1f))
             cameraPosition.translate(Vector3(-0.5f, 0f, -1f))
 
-            scene!!.addSolid(Sphere(Vector3(2f, 0.5f, 0f), 1.4f, Color.WHITE, 0.1f, 0.8f, 0f))
+            //scene!!.addSolid(Sphere(Vector3(2f, 0.5f, 0f), 1.4f, Color.WHITE, 0.1f, 0.8f, 0f))
 
             //scene!!.addSolid(Sphere(Vector3(-2f, 0.7f, -1f), 1.8f, Color.GREEN, 0.5f, 0.5f, 0f))
 
-            scene!!.addSolid(Box(Vector3(0f, 0f, 2f), Vector3(1f, 1f, 1f), Color.BLACK, 0.7f, 0.1f, 0f))
+            scene!!.addSolid(Box(Vector3(0f, 0f, 0f), Vector3(0.5f, 0.5f, 0.5f), Color.BLACK, 0f, 0f, 0.2f))
+            scene!!.addSolid(Box(Vector3(0f, 0.5f, 0f), Vector3(0.5f, 1f, 0.5f), Color.BLACK, 0f, 0f, 0.2f))
+            scene!!.addSolid(Box(Vector3(0f, 1f, 0f), Vector3(0.5f, 1.5f, 0.5f), Color.BLACK, 0f, 0f, 0.2f))
 
             scene!!.addSolid(Cylinders(Vector3(0f, 0f, 0f), 1f, 1f, Color.DARK_GRAY, 0.1f, 0.8f, 0f))
 
-            scene!!.addSolid(Cylinders(Vector3(-2f, 0f, 0f), 1f, 0.5f, Color.BLUE, 0.9f, 0.7f, 0f))
+            scene!!.addSolid(Cylinders(Vector3(0f, -0.5f, 0f), 0.8f, 0.5f, Color.BLUE, 0.1f, 0.8f, 0f))
+
+            //scene!!.addSolid(Cylinders(Vector3(0f, 0f, 0f), 0.2f, 1.5f, Color.DARK_GRAY, 0.5f, 0.1f, 0f))
 
             scene!!.addSolid(Plane(-1f, Color(0f, 0f, 0f), true, 0.1f, 0f, 0f))
             //scene!!.addSolid(Wall(5f, Color(0f, 0f, 0f), true, 0.1f, 0f, 0f))
@@ -104,18 +108,18 @@ class MainView : View("Cup and Spoon") {
             keyboard {
                 addEventHandler(KeyEvent.KEY_PRESSED) {
                     if (it.code == KeyCode.D) {
-                        cameraMotion.x = 1.2f
+                        cameraMotion.x = 5.2f
                     } else if (it.code == KeyCode.A) {
-                        cameraMotion.x = -1.2f
+                        cameraMotion.x = -5.2f
                     } else if (it.code == KeyCode.W) {
-                        cameraMotion.z = (1.2f)
+                        cameraMotion.z = (5.2f)
                     } else if (it.code == KeyCode.S) {
-                        cameraMotion.z = -1.2f
+                        cameraMotion.z = -5.2f
                     } else if (it.code == KeyCode.SPACE) {
-                        cameraMotion.y = (1.2f)
+                        cameraMotion.y = (5.2f)
                         renderToImage(WIDTH, HEIGHT)
                     } else if (it.code == KeyCode.SHIFT) {
-                        cameraMotion.y = -1.2f
+                        cameraMotion.y = -5.2f
                     } else if (it.code == KeyCode.NUMPAD1) {
                         resolutionf = 1f
                     } else if (it.code == KeyCode.NUMPAD2) {

@@ -3,7 +3,7 @@ package raytracing.solids
 import raytracing.math.*
 import raytracing.pixels.Color
 
-class Box(position: Vector3, scale: Vector3, color: Color, reflectivity: Float, fractivity: Float, emission: Float) :
+class Rectangle(position: Vector3, scale: Vector3, color: Color, reflectivity: Float, fractivity: Float, emission: Float) :
     Solid(position, color, reflectivity, fractivity, emission) {
     private val min: Vector3
     private val max: Vector3

@@ -6,6 +6,10 @@ import tornadofx.*
 class SettingsView() : View("Settings") {
 
     var resolution_slider = slider()
+    var lightPosX = textfield()
+    var lightPosY = textfield()
+    var lightPosZ = textfield()
+
     override val root = hbox {
 
         alignment = Pos.CENTER
@@ -21,8 +25,38 @@ class SettingsView() : View("Settings") {
             }
         }
 
+
+        val lightMotion = vbox {
+            alignment = Pos.CENTER
+            spacing = 10.0
+            run {
+                vbox {
+                    alignment = Pos.CENTER
+                    spacing = 10.0
+                    form {
+                        fieldset("Light position") {
+                            field("Light position x") {
+                                lightPosX = textfield("-1")
+                            }
+                             field("Light position y") {
+                                lightPosY = textfield("4")
+                            }
+                            field("Light position z") {
+                                lightPosZ = textfield("1")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         fun makeImageProperties() {
             MainView.resolutionf = resolution_slider.value.toFloat()
+
+            MainView.scene!!.light.position.x = lightPosX.text.toFloat()
+            MainView.scene!!.light.position.y = lightPosX.text.toFloat()
+            MainView.scene!!.light.position.z = lightPosX.text.toFloat()
+
             MainView.renderToImage(MainView.WIDTH, MainView.HEIGHT)
         }
 
@@ -128,5 +162,18 @@ class SettingsView() : View("Settings") {
                 }
             }
         }
+
+       vbox {
+            alignment = Pos.CENTER
+            spacing = 10.0
+            run {
+                vbox {
+                    alignment = Pos.CENTER
+                    spacing = 10.0
+
+                }
+            }
+        }
+
     }
 }
