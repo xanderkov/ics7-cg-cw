@@ -90,14 +90,14 @@ class SettingsView() : View("Settings") {
                         value = 0.8
                     }
 
-                    label { text = "Коэффициент поглощения \nжидкости (внетренний цилиндр)" }
+                    label { text = "Коэффициент поглощения \nжидкости (внутренний цилиндр)" }
                     waterSliderR = slider {
                         min = 0.01
                         max = 1.0
                         value = 0.1
                     }
 
-                    label { text = "Коэффициент преломления \nжидкости (внетренний цилиндр)" }
+                    label { text = "Коэффициент преломления \nжидкости (внутренний цилиндр)" }
                     waterSliderF = slider {
                         min = 0.01
                         max = 1.0
@@ -129,14 +129,14 @@ class SettingsView() : View("Settings") {
                     alignment = Pos.CENTER
                     spacing = 10.0
 
-                    label { text = "Цвет чаши\n (внешний цилиндр)" }
+                    label { text = "Цвет чаши\n(внешний цилиндр)" }
                     cupColor = combobox {
                         value = "Темной серый"
                         items = allColors
                     }
 
                     label { text = "Цвет жидкости\n" +
-                            " (внешний цилиндр)" }
+                            "(внутренний цилиндр)" }
                     waterColor = combobox {
                         value = "Голубой"
                         items = allColors
