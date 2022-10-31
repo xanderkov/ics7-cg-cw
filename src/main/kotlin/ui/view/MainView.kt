@@ -30,8 +30,8 @@ class MainView : View("Cup and Spoon") {
         var camera: Camera = Camera()
         var cameraYaw = 0f
         var cameraPitch = 0f
-        val WIDTH: Int = 1200
-        val HEIGHT: Int = 700
+        val WIDTH: Int = 1366
+        val HEIGHT: Int = 710
 
         var resolutionf: Float = 0.25f
 
@@ -91,8 +91,6 @@ class MainView : View("Cup and Spoon") {
 
     }
     var img: ImageView = imageview(SwingFXUtils.toFXImage(image, null))
-
-
 
     override val root = hbox {
         run {

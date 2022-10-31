@@ -5,7 +5,6 @@ import ui.view.MainView
 import javafx.stage.Stage
 import tornadofx.*
 import ui.view.SettingsView
-import java.util.Arrays
 
 
 class MyApp: App(MainView::class, Styles::class) {
@@ -15,9 +14,11 @@ class MyApp: App(MainView::class, Styles::class) {
             height = 700.0
 
         }
+
         super.start(stage)
         SettingsView().openWindow()
     }
+
 
 }
 fun main(args: Array<String>) {
