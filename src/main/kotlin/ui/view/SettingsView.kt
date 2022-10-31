@@ -1,32 +1,42 @@
 package ui.view
 
+import javafx.collections.FXCollections
 import javafx.geometry.Pos
+import raytracing.pixels.Color
 import tornadofx.*
 
 class SettingsView() : View("Settings") {
 
-    var resolution_slider = slider()
-    var lightPosX = textfield()
-    var lightPosY = textfield()
-    var lightPosZ = textfield()
-    var cupSliderR = slider()
-    var cupSliderF = slider()
+    private val allColors = FXCollections.observableArrayList<String>(
+        "Темно серый", "Черный", "Голубой", "Красный", "Зеленый"
+    )
 
-    var waterSliderR = slider()
+    private var resolutionSlider = slider()
+    private var lightPosX = textfield()
+    private var lightPosY = textfield()
+    private var lightPosZ = textfield()
+    private var cupSliderR = slider()
+    private var cupSliderF = slider()
+
+    private var waterSliderR = slider()
     var waterSliderF = slider()
 
     var boxSliderR = slider()
     var boxSliderF = slider()
 
+    private var cupColor = combobox<String>()
+    private var boxColor = combobox<String>()
+    private var waterColor = combobox<String>()
+
     override val root = hbox {
 
         alignment = Pos.CENTER
         spacing = 10.0
-        val sliders = vbox {
+        vbox {
             alignment = Pos.CENTER
             spacing = 10.0
             label { text = "Разрешающая способность" }
-            resolution_slider = slider {
+            resolutionSlider = slider {
                 min = 0.0
                 max = 1.0
                 value = 0.25
@@ -34,7 +44,7 @@ class SettingsView() : View("Settings") {
         }
 
 
-        val lightMotion = vbox {
+        vbox {
             alignment = Pos.CENTER
             spacing = 10.0
             run {
@@ -98,44 +108,101 @@ class SettingsView() : View("Settings") {
                     boxSliderR = slider {
                         min = 0.01
                         max = 1.0
-                        value = 0.8
+                        value = 0.1
                     }
 
                     label { text = "Коэффициент преломления \nСтержня" }
                     boxSliderF = slider {
                         min = 0.01
                         max = 1.0
-                        value = 0.8
+                        value = 0.1
                     }
                 }
             }
         }
 
+        vbox {
+            alignment = Pos.CENTER
+            spacing = 10.0
+            run {
+                vbox {
+                    alignment = Pos.CENTER
+                    spacing = 10.0
+
+                    label { text = "Цвет чаши\n (внешний цилиндр)" }
+                    cupColor = combobox {
+                        value = "Темной серый"
+                        items = allColors
+                    }
+
+                    label { text = "Цвет жидкости\n" +
+                            " (внешний цилиндр)" }
+                    waterColor = combobox {
+                        value = "Голубой"
+                        items = allColors
+                    }
+
+                    label { text = "Цвет стержня\n"}
+                    boxColor = combobox {
+                        value = "Темной серый"
+                        items = allColors
+                    }
+                }
+            }
+        }
+
+        fun stringToColor(SomeCombo: String): Color {
+            if (SomeCombo == "Темно серый") {
+                return Color.DARK_GRAY
+            }
+            if (SomeCombo == "Голубой") {
+                return Color.BLUE
+            }
+            if (SomeCombo == "Черный") {
+                return Color.BLACK
+            }
+            if (SomeCombo == "Красный") {
+                return Color.RED
+            }
+            if (SomeCombo == "Зеленый") {
+                return Color.GREEN
+            }
+            return Color.BLACK
+        }
+
         fun makeImageProperties() {
-            MainView.resolutionf = resolution_slider.value.toFloat()
+            MainView.resolutionf = resolutionSlider.value.toFloat()
 
             MainView.scene!!.light.position.x = lightPosX.text.toFloat()
             MainView.scene!!.light.position.y = lightPosY.text.toFloat()
             MainView.scene!!.light.position.z = lightPosZ.text.toFloat()
 
-            MainView.scene!!.solids[3].reflectivity = waterSliderR.value.toFloat()
-            MainView.scene!!.solids[3].fractivity = waterSliderF.value.toFloat()
-
-            MainView.scene!!.solids[4].reflectivity = cupSliderR.value.toFloat()
-            MainView.scene!!.solids[4].fractivity = cupSliderF.value.toFloat()
-
+            // Стержень
             MainView.scene!!.solids[0].reflectivity = boxSliderR.value.toFloat()
             MainView.scene!!.solids[0].fractivity = boxSliderF.value.toFloat()
             MainView.scene!!.solids[1].reflectivity = boxSliderR.value.toFloat()
             MainView.scene!!.solids[1].fractivity = boxSliderF.value.toFloat()
-            MainView.scene!!.solids[2].reflectivity = boxSliderR.value.toFloat()
-            MainView.scene!!.solids[2].fractivity = boxSliderF.value.toFloat()
+
+            MainView.scene!!.solids[0].color = stringToColor(boxColor.value)
+            MainView.scene!!.solids[1].color = stringToColor(boxColor.value)
+            // Чаша
+            MainView.scene!!.solids[2].reflectivity = cupSliderR.value.toFloat()
+            MainView.scene!!.solids[2].fractivity = cupSliderF.value.toFloat()
+
+            MainView.scene!!.solids[2].color = stringToColor(cupColor.value)
+            // Жидкость
+            MainView.scene!!.solids[3].reflectivity = waterSliderR.value.toFloat()
+            MainView.scene!!.solids[3].fractivity = waterSliderF.value.toFloat()
+
+            MainView.scene!!.solids[3].color = stringToColor(waterColor.value)
+
+
 
             MainView.renderToImage(MainView.WIDTH, MainView.HEIGHT)
         }
 
 
-        val camangles = vbox {
+        vbox {
             alignment = Pos.CENTER
             spacing = 10.0
             run {
@@ -177,7 +244,7 @@ class SettingsView() : View("Settings") {
             }
         }
 
-        val cammotion = vbox {
+        vbox {
             alignment = Pos.CENTER
             spacing = 10.0
             run {
@@ -244,7 +311,10 @@ class SettingsView() : View("Settings") {
                 vbox {
                     alignment = Pos.CENTER
                     spacing = 10.0
-
+                    button {
+                        text = "Обновить\n изображение"
+                        action { makeImageProperties() }
+                    }
                 }
             }
         }

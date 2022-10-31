@@ -1,7 +1,6 @@
 package ui.view
 
 import javafx.beans.property.SimpleObjectProperty
-import javafx.beans.property.SimpleStringProperty
 import javafx.embed.swing.SwingFXUtils
 import javafx.geometry.Pos
 import javafx.scene.image.Image
@@ -15,7 +14,6 @@ import raytracing.rendering.Renderer
 import raytracing.rendering.Scene
 import raytracing.solids.Box
 import raytracing.solids.Plane
-import raytracing.solids.Sphere
 import raytracing.solids.Cylinders
 import tornadofx.*
 import java.awt.image.BufferedImage
@@ -34,7 +32,6 @@ class MainView : View("Cup and Spoon") {
         var cameraPitch = 0f
         val WIDTH: Int = 1200
         val HEIGHT: Int = 700
-        val captureCursor = false
 
         var resolutionf: Float = 0.25f
 
@@ -63,9 +60,8 @@ class MainView : View("Cup and Spoon") {
 
             //scene!!.addSolid(Sphere(Vector3(-2f, 0.7f, -1f), 1.8f, Color.GREEN, 0.5f, 0.5f, 0f))
 
-            scene!!.addSolid(Box(Vector3(0f, 0f, 0f), Vector3(0.5f, 0.5f, 0.5f), Color.BLACK, 0.1f, 0f, 0.2f))
-            scene!!.addSolid(Box(Vector3(0f, 0.5f, 0f), Vector3(0.5f, 1f, 0.5f), Color.BLACK, 0.1f, 0f, 0.2f))
-            scene!!.addSolid(Box(Vector3(0f, 1f, 0f), Vector3(0.5f, 1.5f, 0.5f), Color.BLACK, 0.1f, 0f, 0.2f))
+            scene!!.addSolid(Box(Vector3(0f, 0f, 0f), Vector3(0.7f, 0.7f, 0.7f), Color.DARK_GRAY, 0.1f, 0f, 0.2f))
+            scene!!.addSolid(Box(Vector3(0f, 0.7f, 0f), Vector3(0.7f, 1.4f, 0.7f), Color.DARK_GRAY, 0.1f, 0f, 0.2f))
 
             scene!!.addSolid(Cylinders(Vector3(0f, 0f, 0f), 1f, 1f, Color.DARK_GRAY, 0.1f, 0.8f, 0f))
 
@@ -85,7 +81,7 @@ class MainView : View("Cup and Spoon") {
             renderToImage(WIDTH, HEIGHT)
         }
 
-        fun saveImage(width: Int, height: Int) {
+        fun saveImage() {
             Renderer.renderScene(scene!!, image.graphics, WIDTH, HEIGHT, resolutionf)
             val imgFile = File("src/main/resources/output.png")
             ImageIO.write(image, "PNG", FileOutputStream(imgFile))
@@ -95,6 +91,7 @@ class MainView : View("Cup and Spoon") {
 
     }
     var img: ImageView = imageview(SwingFXUtils.toFXImage(image, null))
+
 
 
     override val root = hbox {
@@ -130,7 +127,7 @@ class MainView : View("Cup and Spoon") {
                         resolutionf = 0.125f
                     } else if (it.code == KeyCode.F12) {
                         try {
-                            saveImage(1366, 1280)
+                            saveImage()
                         } catch (ex: IOException) {
                             ex.printStackTrace()
                         }
