@@ -31,7 +31,7 @@ class MainView : View("Cup and Spoon") {
         var cameraYaw = 0f
         var cameraPitch = 0f
         val WIDTH: Int = 1366
-        val HEIGHT: Int = 710
+        val HEIGHT: Int = 650
 
         var resolutionf: Float = 0.25f
 
@@ -92,7 +92,16 @@ class MainView : View("Cup and Spoon") {
     }
     var img: ImageView = imageview(SwingFXUtils.toFXImage(image, null))
 
-    override val root = hbox {
+    override val root = vbox {
+        spacing = 10.0
+        alignment = Pos.TOP_LEFT
+        menubar {
+            menu("Settings" ) {
+                item("Settings", "Shortcut+S").action {
+                    SettingsView().openWindow()
+                }
+            }
+        }
         run {
             alignment = Pos.CENTER
             spacing = 10.0
