@@ -4,16 +4,19 @@ import raytracing.math.*
 import raytracing.pixels.*
 import raytracing.solids.Solid
 import java.awt.Graphics
+import java.time.LocalTime
 import kotlin.Double.Companion.POSITIVE_INFINITY
+import kotlin.concurrent.timerTask
 import kotlin.math.pow
 import kotlin.math.*
+import kotlin.time.TimedValue
 
 
 class Renderer {
     companion object {
         private const val GLOBAL_ILLUMINATION = 0.2f
         private const val SKY_EMISSION = 0.5f
-        private const val MAX_REFLECTION_BOUNCES = 5
+        private const val MAX_REFLECTION_BOUNCES = 9
         private const val SHOW_SKYBOX = true
 
         private const val minDistance = 0
@@ -161,6 +164,7 @@ class Renderer {
 
         fun renderScene(scene: Scene?, gfx: Graphics, width: Int, height: Int, resolution: Float) {
             val blockSize = (1 / resolution).toInt()
+            val start = System.nanoTime()
             for (x in 0 until width step blockSize) {
                 for (y in 0 until height step blockSize) {
                     val uv: FloatArray = getNormalizedScreenCoordinates(x, y, width, height)
@@ -169,6 +173,7 @@ class Renderer {
                     gfx.fillRect(x, y, blockSize, blockSize)
                 }
             }
+            println((System.nanoTime() - start))
         }
 
     }
