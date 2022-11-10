@@ -25,4 +25,7 @@ https://openjfx.io/openjfx-docs/
 
 Чтобы не забыть, есть эта ссылка: https://www.youtube.com/watch?v=Ope4icw6bVk
 
-Пока это хеллоу ворд
+## Как это выглядит
+
+[](./docs/rpz/assets/interface-2.png)
+[](./docs/rpz/assets/interface-1.png)
