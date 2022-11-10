@@ -27,5 +27,5 @@ https://openjfx.io/openjfx-docs/
 
 ## Как это выглядит
 
-[](./docs/rpz/assets/interface-2.png)
-[](./docs/rpz/assets/interface-1.png)
+![Пульт управления](./docs/rpz/assets/interface-2.png)
+![Программа](./docs/rpz/assets/interface-1.png)
