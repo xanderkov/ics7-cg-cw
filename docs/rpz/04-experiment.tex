@@ -1,5 +1,5 @@
 \chapter{Исследовательская часть}
-
+В исследовательской части будут представлено время работы реализации алгоритма и его сравнение с реальным преломлением.
 \section{Технические характеристики}
 Тестирование выполнялось на устройстве со следующими техническими характеристиками:
 \begin{itemize}
@@ -15,6 +15,8 @@
 
 На рисунке \ref{img:inter-coef-1} продемонстрировано, что коэффициенты жидкости и цилиндра равны. 
 
+
+
 \begin{figure}[ht!]
 	\centering{
 		\includegraphics[width=0.8\textwidth]{assets/coef-1.png}
@@ -26,7 +28,7 @@
 
 \begin{figure}[ht!]
 	\centering{
-		\includegraphics[width=0.4\textwidth]{assets/coef-2.png}
+		\includegraphics[width=0.3\textwidth]{assets/coef-2.png}
 		\caption{Интерфейс настроек программы}
 		\label{img:inter-coef}}
 \end{figure}
@@ -44,27 +46,67 @@
 		\label{tab:time1}
 		\begin{tabular}{|c|c|}
 			\hline
-			Глубина рекурсии & Время в 	нс. \\
+			Глубина рекурсии & Время в с. \\
 			\hline
-			1  & 779 031 434 \\
+			1  & 0.779 \\
 			\hline
-			2  & 892 963 172 \\
+			2  & 0.892 \\
 			\hline
-			3  & 1 282 984 014 \\
+			3  & 1.282 \\
 			\hline
-			4  & 1 618 809 960 \\
+			4  & 1.618 \\
 			\hline
-			5  & 2 081 470 533 \\
+			5  & 2.081 \\
 			\hline
-			6  & 3 128 113 059 \\
+			6  & 3.128\\
 			\hline
-			7  & 4 830 126 723 \\
+			7  & 4.830\\
 			\hline
-			8  & 7 369 684 160 \\
-			\hline
-			9  & 12 912 481 173 \\
+			8  & 7.369\\
 			\hline
 			
 		\end{tabular}
 	\end{center}
 \end{table}
+\newpage
+На рисунке \ref{graph:r} представлено время работы обратной трассировки лучей.
+
+\begin{figure}[ht!]
+	\begin{center}
+		\captionsetup{singlelinecheck = false, justification=centerfirst}
+		\begin{tikzpicture}
+			\begin{axis}[
+				xlabel={глубина рекурсии},
+				ylabel={время, с},
+				width = 0.95\textwidth,
+				height=0.3\textheight,
+				xmin=0, xmax=9,
+				legend pos=north west,
+				xmajorgrids=true,
+				grid style=dashed,
+				]
+				\addplot[
+				blue,
+				semithick,
+				mark = x,
+				mark size = 3pt,
+				thick,
+				] file {assets/time.dat};
+				
+				
+				\legend{
+					Обратная трассировка лучей
+				}
+			\end{axis}
+		\end{tikzpicture}
+		\centering
+		\caption{Результаты времени работы обратной трассировки лучей}
+		\label{graph:r}
+	\end{center}
+\end{figure}
+
+На основе графика можно сделать вывод, что сложность реализации алгоритма является $O(n^3)$.
+
+\section{Вывод}
+
+В результате было выявлено, что реализация алгоритма соответствует реальному преломлению и представлено время работы реализации алгоритма.
