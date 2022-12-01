@@ -63,7 +63,6 @@ class Vector3(x: kotlin.Float, y: kotlin.Float, z: kotlin.Float) {
         return Vector3(_x, _y, _z)
     }
 
-    /** Does the same as Vector3.add but changes the vector itself instead of returning a new one  */
     fun translate(vec: Vector3) {
         x += vec.x
         y += vec.y

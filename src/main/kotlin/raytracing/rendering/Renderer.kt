@@ -16,7 +16,7 @@ class Renderer {
     companion object {
         private const val GLOBAL_ILLUMINATION = 0.2f
         private const val SKY_EMISSION = 0.5f
-        private const val MAX_REFLECTION_BOUNCES = 9
+        private const val MAX_REFLECTION_BOUNCES = 5
         private const val SHOW_SKYBOX = true
 
         private const val minDistance = 0
